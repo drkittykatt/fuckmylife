@@ -3,6 +3,8 @@ const router = express.Router();
 const validateForm = require("../controllers/validateForm");
 const pool = require("../db.js");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // router.post("/login", (req, res) => {
 //   validateForm(req, res);
@@ -31,10 +33,24 @@ router
         potentialLogin.rows[0].passhash
       );
       if (isSamePass) {
-        // req.session.user = {
-        //   username: req.body.username,
-        //   id: potentialLogin.rows[0].id,
-        // };
+        jwt.sign(
+          {
+            username: req.body.username,
+            id: potentialLogin.rows[0].id,
+          },
+          process.env.JWT_SECRET,
+          { expiresIn: "365d" }, //can change to "1min" to test logic when token expires
+          (err, token) => {
+            if (err) {
+              res.json({
+                loggedIn: false,
+                status: "Something went wrong, try again later",
+              });
+              return;
+            }
+            res.json({ loggedIn: true, token });
+          }
+        );
         res.json({ loggedIn: true, username: req.body.username });
         console.log("logged in");
       } else {
