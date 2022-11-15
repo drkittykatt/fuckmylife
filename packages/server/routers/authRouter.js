@@ -4,6 +4,7 @@ const validateForm = require("../controllers/validateForm");
 const pool = require("../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { jwtSign } = require("../controllers/jwt/jwtAuth");
 require("dotenv").config();
 
 // router.post("/login", (req, res) => {
@@ -33,29 +34,39 @@ router
         potentialLogin.rows[0].passhash
       );
       if (isSamePass) {
-        jwt.sign(
+        jwtSign(
           {
             username: req.body.username,
             id: potentialLogin.rows[0].id,
           },
           process.env.JWT_SECRET,
-          { expiresIn: "365d" }, //can change to "1min" to test logic when token expires
-          (err, token) => {
-            if (err) {
-              res.json({
-                loggedIn: false,
-                status: "Something went wrong, try again later",
-              });
-              return;
-            }
+          { expiresIn: "365d" } //can change to "1min" to test logic when token expires
+          // (err, token) => {
+          //   if (err) {
+          //     res.json({
+          //       loggedIn: false,
+          //       status: "Something went wrong, try again later",
+          //     });
+          //     return;
+          //   }
+          //   res.json({ loggedIn: true, token });
+          //   console.log("logged in");
+          // }
+        )
+          .then((token) => {
             res.json({ loggedIn: true, token });
-          }
-        );
-        res.json({ loggedIn: true, username: req.body.username });
-        console.log("logged in");
+            console.log("logged in");
+          })
+          .catch((err) => {
+            console.log(err);
+            res.json({
+              loggedIn: false,
+              status: "Something went wrong, try again later",
+            });
+          });
       } else {
         res.json({ loggedIn: false, status: "Wrong username or password!" });
-        console.log("not good");
+        console.log("wrong password");
       }
     } else {
       console.log("not good");
@@ -82,8 +93,25 @@ router.post("/signup", async (req, res) => {
     //   username: req.body.username,
     //   id: newUserQuery.rows[0].id,
     // };
-
-    res.json({ loggedIn: true, username: req.body.username });
+    jwt.sign(
+      {
+        username: req.body.username,
+        id: newUserQuery.rows[0].id,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "365d" }, //can change to "1min" to test logic when token expires
+      (err, token) => {
+        if (err) {
+          res.json({
+            loggedIn: false,
+            status: "Something went wrong, try again later",
+          });
+          return;
+        }
+        res.json({ loggedIn: true, token });
+        console.log("new user registered");
+      }
+    );
   } else {
     res.json({ loggedIn: false, status: "Username taken" });
   }
