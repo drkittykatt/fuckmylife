@@ -16,6 +16,6 @@
     "helmet": "^6.0.0",
     "nodemon": "^2.0.20",
     "socket.io": "^4.5.3",
-    "yup": "^0.32.11"
+    "@whatsapp-clone/common": "1.0.0"
   }
 }
