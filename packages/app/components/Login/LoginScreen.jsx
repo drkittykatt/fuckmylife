@@ -22,29 +22,30 @@ export default function LoginScreen({ navigation }) {
         initialValues={{ username: "", password: "" }}
         validationSchema={SignupSchema}
         onSubmit={(values, actions) => {
+          const vals = { ...values };
           console.log(values);
           actions.resetForm();
-          // fetch("http://localhost:4000/auth/login", {
-          //     method: "POST",
-          //     credentials: "include",
-          //     headers: {
-          //         "Content-Type": "application/json",
-          //     },
-          //     body: JSON.stringify(vals),
-          // })
-          // .catch(err => {
-          //     return;
-          // })
-          // .then(res => {
-          //     if (!res || !res.ok || res.status >= 400) {
-          //         return;
-          //     }
-          //     return res.json();
-          // })
-          // .then(data => {
-          //     if (!data) return;
-          //     console.log(data);
-          // });
+          fetch("http://localhost:4000/auth/login", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(vals),
+          })
+            .catch((err) => {
+              return;
+            })
+            .then((res) => {
+              if (!res || !res.ok || res.status >= 400) {
+                return;
+              }
+              return res.json();
+            })
+            .then((data) => {
+              if (!data) return;
+              console.log(data);
+            });
         }}
       >
         {(props) => (
