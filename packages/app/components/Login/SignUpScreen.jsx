@@ -50,6 +50,7 @@ export default function SignUpScreen({ navigation }) {
       >
         {(props) => (
           <View>
+            <Text>{error}</Text>
             <Text>Username</Text>
             <TextInput
               style={globalStyles.input}

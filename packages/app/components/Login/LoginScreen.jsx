@@ -51,6 +51,7 @@ export default function LoginScreen({ navigation }) {
       >
         {(props) => (
           <View>
+            <Text>{error}</Text>
             <Text>Username</Text>
             <TextInput
               style={globalStyles.input}
