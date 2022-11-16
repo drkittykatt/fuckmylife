@@ -3,8 +3,12 @@ import { Button, TextInput, View, Text, StyleSheet, Alert } from "react-native";
 import { Formik, ErrorMessage } from "formik";
 import { globalStyles } from "../../styles/global";
 const { formSchema } = require("@whatsapp-clone/common");
+import { AccountContext } from "../AccountContext";
+import * as SecureStore from "expo-secure-store";
 
 export default function SignUpScreen({ navigation }) {
+  const { setUser } = React.useContext(AccountContext);
+  const [error, setError] = React.useState(null);
   return (
     <View style={globalStyles.container}>
       <Formik
@@ -34,6 +38,13 @@ export default function SignUpScreen({ navigation }) {
             .then((data) => {
               if (!data) return;
               console.log(data);
+              setUser({ ...data });
+              if (data.status) {
+                setError(data.status);
+              } else if (data.loggedIn) {
+                // navigate("/home");
+                SecureStore.setItemAsync("token", data.token);
+              }
             });
         }}
       >
