@@ -4,9 +4,6 @@ import { View, Text, Button, Stylesheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-// import { AuthContext } from "./AuthContext";
-// import UserContext from "./components/AccountContext";
 import { useContext } from "react";
 import { AccountContext } from "./AccountContext";
 
@@ -62,10 +59,6 @@ export default function Views() {
   const isAuth = useAuth();
 
   return (
-    // <Stack.Navigator initialRouteName="Login">
-    //   <Stack.Screen name="Login" component={LoginScreen} />
-    //   <Stack.Screen name="SignUp" component={SignUpScreen} />
-    // </Stack.Navigator>
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {
         // state.isLoading ? (
