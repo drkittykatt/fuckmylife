@@ -1,6 +1,7 @@
-import { EntitySchema } from "typeorm";
+const { EntitySchema } = require("typeorm");
 
-export default new EntitySchema({
+// export default new EntitySchema({
+module.exports = new EntitySchema({
   name: "Group",
   tableName: "groups",
   columns: {

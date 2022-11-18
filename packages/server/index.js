@@ -4,6 +4,22 @@ const { Server } = require("socket.io");
 const app = express();
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
+const { DataSource } = require("typeorm");
+const { User } = require("./entity/User");
+const { Group } = require("./entity/Group");
+const { Message } = require("./entity/Message");
+const { Participant } = require("./entity/Participant");
+
+const AppDataSource = new DataSource({
+  type: "postgres",
+  host: "localhost",
+  port: 5432,
+  username: "kwifvat",
+  password: "postgres",
+  database: "slack4",
+  //synchronize: true,
+  entities: [User, Group, Message, Participant],
+});
 
 const server = require("http").createServer(app);
 
@@ -13,6 +29,14 @@ const io = new Server(server, {
     credentials: true,
   },
 });
+
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Data Source has been initialized!");
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization", err);
+  });
 
 app.use(helmet());
 app.use(
