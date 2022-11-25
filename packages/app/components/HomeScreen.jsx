@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Button, Text, View, SafeAreaView, StyleSheet } from "react-native";
 import * as SecureStore from "expo-secure-store";
-// import { AuthContext } from "./utils";
 import { AccountContext } from "./AccountContext";
 
 export default function HomeScreen({ navigation }) {
-  const { setUser } = React.useContext(AccountContext);
-  // const { signOut } = React.useContext(AccountContext);
+  const { user, setUser } = React.useContext(AccountContext);
+
+  const myUsername = user.username;
   const signOut = () => {
     SecureStore.deleteItemAsync("userToken");
     setUser({ loggedIn: false });
@@ -15,7 +15,7 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={container}>
-      <Text>Home screen!</Text>
+      <Text>Hello, {myUsername}! </Text>
       <Button title="Sign out" onPress={signOut} />
       <Button title="Detail" onPress={() => navigation.navigate("Detail")} />
     </SafeAreaView>

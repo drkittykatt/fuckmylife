@@ -22,7 +22,12 @@ module.exports.handleLogin = async (req, res) => {
         return;
       }
 
-      res.json({ loggedIn: true, token });
+      res.json({
+        loggedIn: true,
+        token,
+        userId: potentialLogin.rows[0].id,
+        username: req.body.username,
+      });
     })
     .catch(() => {
       res.json({ loggedIn: false });
@@ -50,7 +55,12 @@ module.exports.attemptLogin = async (req, res) => {
         { expiresIn: "365d" } //can change to "1min" to test logic when token expires
       )
         .then((token) => {
-          res.json({ loggedIn: true, token });
+          res.json({
+            loggedIn: true,
+            token,
+            userId: potentialLogin.rows[0].id,
+            username: req.body.username,
+          }); //added this
           console.log("logged in");
         })
         .catch((err) => {
@@ -92,7 +102,12 @@ module.exports.attemptRegister = async (req, res) => {
       { expiresIn: "365d" }
     )
       .then((token) => {
-        res.json({ loggedIn: true, token });
+        res.json({
+          loggedIn: true,
+          token,
+          userId: newUserQuery.rows[0].id,
+          username: req.body.username,
+        });
         console.log("new user registered");
       })
       .catch((err) => {

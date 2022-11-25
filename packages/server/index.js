@@ -4,6 +4,7 @@ const { Server } = require("socket.io");
 const app = express();
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
+const settingsRouter = require("./routers/settingsRouter");
 
 const server = require("http").createServer(app);
 
@@ -23,6 +24,7 @@ app.use(
 );
 app.use(express.json());
 app.use("/auth", authRouter);
+app.use("/settings", settingsRouter);
 
 // app.get("/api", (req, res) => {
 //   //res.json("hi")

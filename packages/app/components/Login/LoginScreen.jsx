@@ -43,7 +43,6 @@ export default function LoginScreen({ navigation }) {
               if (data.status) {
                 setError(data.status);
               } else if (data.loggedIn) {
-                // navigate("/home");
                 SecureStore.setItemAsync("token", data.token);
               }
             });
