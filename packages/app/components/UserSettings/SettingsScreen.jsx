@@ -20,6 +20,9 @@ export default function SettingsScreen({ navigation }) {
   const changeUsername = null;
   const { container } = styles;
 
+  const password = "password"; //change this later to be the input of the text field - do I need formik or not?
+
+  console.log({ ...user, password });
   const deleteAccount = () => {
     fetch("http://localhost:4000/settings/delete", {
       method: "POST",
@@ -27,7 +30,7 @@ export default function SettingsScreen({ navigation }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify({ ...user, password }),
     })
       .catch((err) => {
         return;
@@ -59,7 +62,7 @@ export default function SettingsScreen({ navigation }) {
         visible={modalVisible}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
+          setModalVisible(false);
         }}
       >
         <View style={styles.centeredView}>
@@ -77,7 +80,6 @@ export default function SettingsScreen({ navigation }) {
                 title="Yes!! Let me delete!! 😡"
                 onPress={() => {
                   setActionTriggered("DELETE_MODAL_2");
-                  setModalVisible(true);
                 }}
               />
             </View>
@@ -99,13 +101,13 @@ export default function SettingsScreen({ navigation }) {
                 title="Reset my password 😅"
                 onPress={() => {
                   setActionTriggered("DELETE_MODAL_3");
-                  setModalVisible(true);
                 }}
               />
               <Button
                 title="Delete account 🫡"
                 onPress={() => {
-                  onPress = { deleteAccount };
+                  setModalVisible(false);
+                  navigation.navigate("DeleteScreen");
                 }}
               />
             </View>
@@ -119,6 +121,8 @@ export default function SettingsScreen({ navigation }) {
 
               <Button title="Close" onPress={() => setModalVisible(false)} />
             </View>
+          ) : actionTriggered === "DELETE_MODAL_4" ? (
+            setModalVisible(false)
           ) : null}
         </View>
       </Modal>
@@ -126,7 +130,6 @@ export default function SettingsScreen({ navigation }) {
       <Button
         title="Change Username"
         onPress={() => {
-          setModalVisible(false);
           navigation.navigate("ChangeUsernameScreen");
         }}
       />

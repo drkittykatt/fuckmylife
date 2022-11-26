@@ -4,6 +4,7 @@ import * as SecureStore from "expo-secure-store";
 import { AccountContext } from "../AccountContext";
 
 // add password verification before deleting. May want to use Formik
+const password = "password"; //change this later to be the input of the text field - do I need formik or not?
 
 export default function DeleteAccountScreen() {
   const { user, setUser } = React.useContext(AccountContext);
@@ -16,7 +17,7 @@ export default function DeleteAccountScreen() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify({ ...user, password }),
     })
       .catch((err) => {
         return;

@@ -3,19 +3,48 @@ const bcrypt = require("bcrypt");
 const { jwtSign, jwtVerify, getJwt } = require("./jwt/jwtAuth");
 
 // will probably want to make the user enter their password again before they can delete
+// module.exports.handleDeleteAccount = async (req, res) => {
+//   const existingUser = await pool.query(
+//     "SELECT username from users WHERE username=$1",
+//     [req.body.username]
+//   );
+
+//   if (existingUser.rowCount != 0) {
+//     // account exists and can be deleted
+//     const deleteUserQuery = await pool.query(
+//       "DELETE FROM users WHERE username=$1",
+//       [req.body.username]
+//     );
+//     res.json({ loggedIn: false, status: "User successfully deleted" });
+//   } else {
+//     res.json({ loggedIn: false, status: "User does not exist" });
+//   }
+// };
+
 module.exports.handleDeleteAccount = async (req, res) => {
   const existingUser = await pool.query(
-    "SELECT username from users WHERE username=$1",
+    "SELECT username, passhash from users WHERE username=$1",
     [req.body.username]
   );
-
+  console.log(existingUser);
   if (existingUser.rowCount != 0) {
     // account exists and can be deleted
-    const deleteUserQuery = await pool.query(
-      "DELETE FROM users WHERE username=$1",
-      [req.body.username]
+    const isSamePass = await bcrypt.compare(
+      req.body.password,
+      existingUser.rows[0].passhash
     );
-    res.json({ loggedIn: false, status: "User successfully deleted" });
+    console.log(isSamePass);
+
+    if (isSamePass) {
+      const deleteUserQuery = await pool.query(
+        "DELETE FROM users WHERE username=$1",
+        [req.body.username]
+      );
+      res.json({ loggedIn: false, status: "User successfully deleted" });
+    } else {
+      res.json({ status: "Wrong password!" });
+      console.log("wrong password");
+    }
   } else {
     res.json({ loggedIn: false, status: "User does not exist" });
   }
