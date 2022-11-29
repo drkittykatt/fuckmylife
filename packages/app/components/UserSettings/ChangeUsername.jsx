@@ -1,57 +1,94 @@
 import * as React from "react";
-import { Text, View, SafeAreaView, StyleSheet, Button } from "react-native";
+import {
+  Text,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  Button,
+  TextInput,
+} from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { AccountContext } from "../AccountContext";
+import { globalStyles } from "../../styles/global";
+const { formSchema } = require("@whatsapp-clone/common");
+import { Formik, ErrorMessage } from "formik";
 
-// add password verification before updating. May want to use Formik
-
-export default function ChangeUsernameScreen() {
+export default function ChangeUsernameScreen({ navigation }) {
   const { user, setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
 
-  const newUsername = "abcdefg";
-  const updateUsername = () => {
-    const newusername = newUsername;
-    console.log(user);
-    console.log("update username activated from front");
-    fetch("http://localhost:4000/settings/updateusername", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...user, newusername }),
-    })
-      .catch((err) => {
-        return;
-      })
-      .then((res) => {
-        if (!res || !res.ok || res.status >= 400) {
-          return;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (!data) return;
-        console.log(data);
-        setUser({ ...data });
-        if (data.status) {
-          setError(data.status);
-        } else if (data.loggedIn) {
-          console.log("no errors I guess");
-        }
-      });
-  };
-  const { container } = styles;
-
   return (
-    <SafeAreaView style={container}>
-      <Text>Change your username! bells and whistles coming soon :D</Text>
-      <Button
-        title="Change Username to something hard coded"
-        onPress={updateUsername}
-      />
-    </SafeAreaView>
+    <View style={globalStyles.container}>
+      <Formik
+        initialValues={{ username: "", password: "" }}
+        validationSchema={formSchema}
+        onSubmit={(values, actions) => {
+          const vals = { ...values };
+          const newusername = vals.username;
+          const passattempt = vals.password;
+          console.log({ ...user, newusername, passattempt });
+          actions.resetForm();
+          fetch("http://localhost:4000/settings/updateusername", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ...user, newusername, passattempt }),
+          })
+            .catch((err) => {
+              return;
+            })
+            .then((res) => {
+              if (!res || !res.ok || res.status >= 400) {
+                return;
+              }
+              return res.json();
+            })
+            .then((data) => {
+              if (!data) return;
+              console.log(data);
+              setUser({ ...data });
+              if (data.status) {
+                setError(data.status);
+              } else if (data.loggedIn) {
+                console.log("no errors I guess");
+              }
+            });
+        }}
+      >
+        {(props) => (
+          <View>
+            <Text>{error}</Text>
+            <Text>Please enter your password to verify your identity</Text>
+            <TextInput
+              style={globalStyles.input}
+              placeholder="Enter Password"
+              onChangeText={props.handleChange("password")}
+              value={props.values.password}
+              secureTextEntry={true}
+              marginBottom={10}
+            />
+            <Text>
+              <ErrorMessage name="password" />
+            </Text>
+            <Text>Please enter your desired new username</Text>
+            <TextInput
+              style={globalStyles.input}
+              placeholder="Enter username"
+              onChangeText={props.handleChange("username")}
+              value={props.values.username}
+              marginBottom={10}
+            />
+            <Text>
+              <ErrorMessage name="username" />
+            </Text>
+
+            <Button title="Update Username" onPress={props.handleSubmit} />
+          </View>
+        )}
+      </Formik>
+    </View>
   );
 }
 

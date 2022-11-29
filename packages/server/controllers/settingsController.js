@@ -1,25 +1,5 @@
 const pool = require("../db");
 const bcrypt = require("bcrypt");
-const { jwtSign, jwtVerify, getJwt } = require("./jwt/jwtAuth");
-
-// will probably want to make the user enter their password again before they can delete
-// module.exports.handleDeleteAccount = async (req, res) => {
-//   const existingUser = await pool.query(
-//     "SELECT username from users WHERE username=$1",
-//     [req.body.username]
-//   );
-
-//   if (existingUser.rowCount != 0) {
-//     // account exists and can be deleted
-//     const deleteUserQuery = await pool.query(
-//       "DELETE FROM users WHERE username=$1",
-//       [req.body.username]
-//     );
-//     res.json({ loggedIn: false, status: "User successfully deleted" });
-//   } else {
-//     res.json({ loggedIn: false, status: "User does not exist" });
-//   }
-// };
 
 module.exports.handleDeleteAccount = async (req, res) => {
   const existingUser = await pool.query(
@@ -50,29 +30,42 @@ module.exports.handleDeleteAccount = async (req, res) => {
   }
 };
 
-// will probably want to make the user enter their password again before they can update username
-// also need to make sure username isn't already taken before changing it!!!
 module.exports.handleUpdateUsername = async (req, res) => {
-  console.log(req.body.username, req.body.newusername);
-  console.log(req.body);
   const existingUser = await pool.query(
-    "SELECT username from users WHERE username=$1",
+    "SELECT username, passhash from users WHERE username=$1",
     [req.body.username]
   );
-
-  if (existingUser.rowCount != 0) {
-    // account exists and can be updated
-    console.log("trying from back end");
-    const updateUsernameQuery = await pool.query(
-      "UPDATE users SET username=$2 WHERE username=$1",
-      [req.body.username, req.body.newusername]
+  const isSamePass = await bcrypt.compare(
+    req.body.passattempt,
+    existingUser.rows[0].passhash
+  );
+  if (isSamePass) {
+    // password is correct, now check and see if the desired new username is taken
+    const usernameTaken = await pool.query(
+      "SELECT username from users WHERE username=$1",
+      [req.body.newusername]
     );
-    res.json({
-      loggedIn: true,
-      username: req.body.newusername,
-      status: "Username successfully updated",
-    });
+    if (usernameTaken.rowCount === 0) {
+      //username is not taken & can be used
+
+      const updateUsernameQuery = await pool.query(
+        "UPDATE users SET username=$2 WHERE username=$1",
+        [req.body.username, req.body.newusername]
+      );
+      res.json({
+        loggedIn: true,
+        username: req.body.newusername,
+        status: "Username successfully updated",
+      });
+    } else {
+      res.json({
+        username: req.body.username,
+        status: "Username is already taken!",
+      });
+      console.log("username not available");
+    }
   } else {
-    res.json({ loggedIn: false, status: "User does not exist" });
+    res.json({ username: req.body.username, status: "Wrong password!" });
+    console.log("wrong password");
   }
 };

@@ -20,40 +20,6 @@ export default function SettingsScreen({ navigation }) {
   const changeUsername = null;
   const { container } = styles;
 
-  const password = "password"; //change this later to be the input of the text field - do I need formik or not?
-
-  console.log({ ...user, password });
-  const deleteAccount = () => {
-    fetch("http://localhost:4000/settings/delete", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...user, password }),
-    })
-      .catch((err) => {
-        return;
-      })
-      .then((res) => {
-        if (!res || !res.ok || res.status >= 400) {
-          return;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (!data) return;
-        console.log(data);
-        setUser({ ...data });
-        if (data.status) {
-          setError(data.status);
-        } else if (data.loggedIn) {
-          SecureStore.deleteItemAsync("userToken");
-          setUser({ loggedIn: false });
-        }
-      });
-  };
-
   return (
     <SafeAreaView style={container}>
       <Modal
@@ -79,47 +45,10 @@ export default function SettingsScreen({ navigation }) {
               <Button
                 title="Yes!! Let me delete!! 😡"
                 onPress={() => {
-                  setActionTriggered("DELETE_MODAL_2");
-                }}
-              />
-            </View>
-          ) : actionTriggered === "DELETE_MODAL_2" ? (
-            <View style={styles.modalView}>
-              <Text>{error}</Text>
-              <Text>Ok enter your password then.</Text>
-              {/* enter form here  */}
-              <TextInput
-                style={globalStyles.input}
-                placeholder="Enter Password"
-                // onChangeText={props.handleChange("password")}
-                // value={props.values.password}
-                secureTextEntry={true}
-                marginBottom={10}
-              />
-              <Button title="Back" onPress={() => setModalVisible(false)} />
-              <Button
-                title="Reset my password 😅"
-                onPress={() => {
-                  setActionTriggered("DELETE_MODAL_3");
-                }}
-              />
-              <Button
-                title="Delete account 🫡"
-                onPress={() => {
                   setModalVisible(false);
                   navigation.navigate("DeleteScreen");
                 }}
               />
-            </View>
-          ) : actionTriggered === "DELETE_MODAL_3" ? (
-            <View style={styles.modalView}>
-              <Text>
-                Okie password reset in progress. Look out for an email to the
-                address associated with this account.
-              </Text>
-              <Text>TO BE IMPLEMENTED.</Text>
-
-              <Button title="Close" onPress={() => setModalVisible(false)} />
             </View>
           ) : actionTriggered === "DELETE_MODAL_4" ? (
             setModalVisible(false)
