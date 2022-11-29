@@ -14,6 +14,7 @@ import DetailScreen from "./DetailScreen";
 import SettingsScreen from "./UserSettings/SettingsScreen";
 import DeleteAccountScreen from "./UserSettings/DeleteAccount";
 import ChangeUsernameScreen from "./UserSettings/ChangeUsername";
+import ChangePasswordScreen from "./UserSettings/ChangePassword";
 import SplashScreen from "./SplashScreen";
 
 const useAuth = () => {
@@ -32,6 +33,10 @@ function HomeStack() {
       <StackHome.Screen
         name="ChangeUsernameScreen"
         component={ChangeUsernameScreen}
+      />
+      <StackHome.Screen
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
       />
     </StackHome.Navigator>
   );

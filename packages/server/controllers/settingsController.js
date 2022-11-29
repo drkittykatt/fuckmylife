@@ -69,3 +69,30 @@ module.exports.handleUpdateUsername = async (req, res) => {
     console.log("wrong password");
   }
 };
+
+module.exports.handleUpdatePassword = async (req, res) => {
+  const existingUser = await pool.query(
+    "SELECT username, passhash from users WHERE username=$1",
+    [req.body.username]
+  );
+  const isSamePass = await bcrypt.compare(
+    req.body.password,
+    existingUser.rows[0].passhash
+  );
+  if (isSamePass) {
+    const hashedPass = await bcrypt.hash(req.body.passattempt1, 10);
+    const updatePasswordQuery = await pool.query(
+      "UPDATE users SET passhash=$1 WHERE username=$2",
+      [hashedPass, existingUser.rows[0].username]
+    );
+
+    res.json({
+      loggedIn: true,
+      username: req.body.username,
+      status: "password successfully updated",
+    });
+  } else {
+    res.json({ username: req.body.username, status: "Wrong password!" });
+    console.log("wrong password");
+  }
+};

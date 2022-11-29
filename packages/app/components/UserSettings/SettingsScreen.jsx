@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { AccountContext } from "../AccountContext";
 import { globalStyles } from "../../styles/global";
+import ChangePasswordScreen from "./ChangePassword";
 
 export default function SettingsScreen({ navigation }) {
   const [actionTriggered, setActionTriggered] = React.useState("");
@@ -62,7 +63,12 @@ export default function SettingsScreen({ navigation }) {
           navigation.navigate("ChangeUsernameScreen");
         }}
       />
-      <Button title="Change Password" onPress={changeUsername} />
+      <Button
+        title="Change Password"
+        onPress={() => {
+          navigation.navigate("ChangePasswordScreen");
+        }}
+      />
       <Button title="Forgot Password" onPress={changeUsername} />
       <Button
         title="Delete Account"
