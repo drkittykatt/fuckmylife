@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const validateForm = require("../controllers/validateForm");
+const validateChangeUsernameForm = require("../controllers/validateChangeUsernameForm");
 const pool = require("../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -12,6 +12,10 @@ const {
 require("dotenv").config();
 
 router.post("/delete", handleDeleteAccount);
-router.post("/updateusername", handleUpdateUsername);
+router.post(
+  "/updateusername",
+  validateChangeUsernameForm,
+  handleUpdateUsername
+);
 
 module.exports = router;

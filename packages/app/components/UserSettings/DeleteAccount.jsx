@@ -16,15 +16,14 @@ import { Formik, ErrorMessage } from "formik";
 export default function DeleteAccountScreen() {
   const { user, setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
-
   return (
     <View style={globalStyles.container}>
       <Formik
-        initialValues={{ password: "" }}
-        validationSchema={formSchema}
+        initialValues={{ passattempt: "" }}
         onSubmit={(values, actions) => {
+          console.log(values);
           const vals = { ...values };
-          const passattempt = vals.password;
+          const passattempt = vals.passattempt;
           actions.resetForm();
           fetch("http://localhost:4000/settings/delete", {
             method: "POST",
@@ -56,25 +55,22 @@ export default function DeleteAccountScreen() {
             });
         }}
       >
-        {(props) => (
+        {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View>
             <Text>{error}</Text>
             <Text>Please enter your password to verify your identity</Text>
             <TextInput
               style={globalStyles.input}
               placeholder="Enter Password"
-              onChangeText={props.handleChange("password")}
-              value={props.values.password}
+              onChangeText={handleChange("passattempt")}
+              onBlur={handleBlur("passattempt")}
+              value={values.passattempt}
               secureTextEntry={true}
               marginBottom={10}
             />
-            <Text>
-              <ErrorMessage name="password" />
-            </Text>
-
             <Button
+              onPress={handleSubmit}
               title="Delete account permanently and Sign out"
-              onPress={props.handleSubmit}
             />
           </View>
         )}

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const validateForm = require("../controllers/validateForm");
+const validateLoginForm = require("../controllers/validateLoginForm");
 const pool = require("../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -12,8 +12,8 @@ const {
 } = require("../controllers/authController");
 require("dotenv").config();
 
-router.route("/login").get(handleLogin).post(validateForm, attemptLogin);
+router.route("/login").get(handleLogin).post(validateLoginForm, attemptLogin);
 
-router.post("/signup", validateForm, attemptRegister);
+router.post("/signup", validateLoginForm, attemptRegister);
 
 module.exports = router;

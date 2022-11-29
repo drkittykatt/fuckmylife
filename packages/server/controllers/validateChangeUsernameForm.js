@@ -1,9 +1,10 @@
 const { formSchema } = require("@whatsapp-clone/common");
 
-const validateForm = (req, res, next) => {
-  const formData = req.body;
+const validateChangeUsernameForm = (req, res, next) => {
+  const username = req.body.newusername;
+  const password = req.body.passattempt;
   formSchema
-    .validate(formData)
+    .validate({ username, password })
     .catch(() => {
       res.status(422).send();
     })
@@ -17,4 +18,4 @@ const validateForm = (req, res, next) => {
     });
 };
 
-module.exports = validateForm;
+module.exports = validateChangeUsernameForm;

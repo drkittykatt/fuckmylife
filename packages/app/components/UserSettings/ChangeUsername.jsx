@@ -10,10 +10,10 @@ import {
 import * as SecureStore from "expo-secure-store";
 import { AccountContext } from "../AccountContext";
 import { globalStyles } from "../../styles/global";
-const { formSchema } = require("@whatsapp-clone/common");
+const { formSchema, newPasswordSchema } = require("@whatsapp-clone/common");
 import { Formik, ErrorMessage } from "formik";
 
-export default function ChangeUsernameScreen({ navigation }) {
+export default function ChangeUsernameScreen({}) {
   const { user, setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
 
@@ -26,7 +26,6 @@ export default function ChangeUsernameScreen({ navigation }) {
           const vals = { ...values };
           const newusername = vals.username;
           const passattempt = vals.password;
-          console.log({ ...user, newusername, passattempt });
           actions.resetForm();
           fetch("http://localhost:4000/settings/updateusername", {
             method: "POST",

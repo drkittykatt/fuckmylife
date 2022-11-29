@@ -10,7 +10,7 @@ module.exports.handleDeleteAccount = async (req, res) => {
   if (existingUser.rowCount != 0) {
     // account exists and can be deleted
     const isSamePass = await bcrypt.compare(
-      req.body.password,
+      req.body.passattempt,
       existingUser.rows[0].passhash
     );
     console.log(isSamePass);
@@ -22,7 +22,7 @@ module.exports.handleDeleteAccount = async (req, res) => {
       );
       res.json({ loggedIn: false, status: "User successfully deleted" });
     } else {
-      res.json({ status: "Wrong password!" });
+      res.json({ username: req.body.username, status: "Wrong password!" });
       console.log("wrong password");
     }
   } else {
