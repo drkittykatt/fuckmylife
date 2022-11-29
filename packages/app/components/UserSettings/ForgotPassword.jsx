@@ -25,10 +25,43 @@ export default function ForgotPasswordScreen({}) {
         validationSchema={forgotPasswordSchema}
         onSubmit={(values, actions) => {
           const vals = { ...values };
-          console.log("hello from submit button");
+          console.log("SECOND button clicked");
           console.log(truePasscode);
-          console.log({ ...user, ...vals });
-          actions.resetForm();
+          console.log(vals.passcode);
+          const validatePasscode = vals.passcode === truePasscode;
+          console.log("the output of validatePasscode is: " + validatePasscode);
+          if (vals.passcode == truePasscode) {
+            console.log("the passcodes match!!");
+          } else {
+            console.log("they don't match ;(");
+          }
+          //   console.log({ ...user, ...vals });
+          // actions.resetForm();
+
+          //   if (actionTriggered === "SUBMIT_1") {
+          //     const vals = { ...values };
+          //     console.log("first button clicked!");
+          //     console.log({ ...user, ...vals });
+          //   } else if (actionTriggered === "SUBMIT_2") {
+          //     const vals = { ...values };
+          //     console.log("SECOND button clicked");
+          //     console.log(truePasscode);
+          //     if (vals.passcode == truePasscode) {
+          //       console.log("the passcodes match!!");
+          //     } else {
+          //       console.log("they don't match ;(");
+          //     }
+          //     console.log({ ...user, ...vals });
+          //     actions.resetForm();
+          //   } else {
+          //     console.log("something bad happened");
+          //   }
+
+          //   const vals = { ...values };
+          //   console.log("hello from submit button");
+          //   console.log(truePasscode);
+          //   console.log({ ...user, ...vals });
+          //   actions.resetForm();
           //   fetch("http://localhost:4000/settings/forgotpassword", {
           //     method: "POST",
           //     credentials: "include",
@@ -71,9 +104,9 @@ export default function ForgotPasswordScreen({}) {
               // let formik take care of all this...
               title="Get 6 digit code"
               onPress={() => {
-                console.log("hello from get code button");
-                setTruePasscode(Math.random().toString(10).substring(2, 8));
-                console.log(truePasscode);
+                let myNumber = Math.random().toString(10).substring(2, 8);
+                console.log("the passcode generated for you is: " + myNumber);
+                setTruePasscode(myNumber);
               }}
             />
             <Text>Enter the 6 digit passcode</Text>
@@ -98,7 +131,6 @@ export default function ForgotPasswordScreen({}) {
             <Text>
               <ErrorMessage name="passattempt1" />
             </Text>
-
             <Text>Please enter your desired new password again</Text>
             <TextInput
               style={globalStyles.input}
@@ -110,8 +142,13 @@ export default function ForgotPasswordScreen({}) {
             <Text>
               <ErrorMessage name="passattempt2" />
             </Text>
-
             <Button title="Reset Password" onPress={props.handleSubmit} />
+            {/* <Button
+              title="Reset Password"
+              onPress={() => {
+                setActionTriggered("SUBMIT_2");
+                console.log("hello from reset password button");
+              }} */}
           </View>
         )}
       </Formik>
