@@ -9,6 +9,7 @@ const {
   handleDeleteAccount,
   handleUpdateUsername,
   handleUpdatePassword,
+  handleForgotPassword,
 } = require("../controllers/settingsController");
 const validateChangePasswordForm = require("../controllers/validateChangePasswordForm");
 require("dotenv").config();
@@ -19,11 +20,16 @@ router.post(
   validateChangeUsernameForm,
   handleUpdateUsername
 );
-// need to add validation here
 router.post(
   "/updatepassword",
   validateChangePasswordForm,
   handleUpdatePassword
+);
+// add validation
+router.post(
+  "/forgotpassword",
+  // validateForgotPasswordForm,
+  handleForgotPassword
 );
 
 module.exports = router;

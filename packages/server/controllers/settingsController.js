@@ -96,3 +96,31 @@ module.exports.handleUpdatePassword = async (req, res) => {
     console.log("wrong password");
   }
 };
+
+module.exports.handleForgotPassword = async (req, res) => {
+  console.log(req.body.passcode);
+  const existingUser = await pool.query(
+    "SELECT username from users WHERE username=$1",
+    [req.body.username]
+  );
+  // will need to change this to whatever random number gets sent via email
+  // generate a random number when the "get 6 digit code" button is clicked
+  // and then send it via email in the same operation - front end work?
+  // may get both input & random number in front end & then compare here
+  if (req.body.passcode == "123456") {
+    const hashedPass = await bcrypt.hash(req.body.passattempt1, 10);
+    const updatePasswordQuery = await pool.query(
+      "UPDATE users SET passhash=$1 WHERE username=$2",
+      [hashedPass, existingUser.rows[0].username]
+    );
+
+    res.json({
+      loggedIn: true,
+      username: req.body.username,
+      status: "password successfully updated",
+    });
+  } else {
+    res.json({ username: req.body.username, status: "Passcode is incorrect" });
+    console.log("wrong passcode");
+  }
+};

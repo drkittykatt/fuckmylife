@@ -2,7 +2,7 @@ import * as React from "react";
 import { Button, TextInput, View, Text, StyleSheet, Alert } from "react-native";
 import { Formik, ErrorMessage } from "formik";
 import { globalStyles } from "../../styles/global";
-const { formSchema } = require("@whatsapp-clone/common");
+const { formSignupSchema } = require("@whatsapp-clone/common");
 import { AccountContext } from "../AccountContext";
 import * as SecureStore from "expo-secure-store";
 
@@ -12,8 +12,8 @@ export default function SignUpScreen({ navigation }) {
   return (
     <View style={globalStyles.container}>
       <Formik
-        initialValues={{ username: "", password: "" }}
-        validationSchema={formSchema}
+        initialValues={{ email: "", username: "", password: "" }}
+        validationSchema={formSignupSchema}
         onSubmit={(values, actions) => {
           const vals = { ...values };
           console.log(values);
@@ -51,6 +51,17 @@ export default function SignUpScreen({ navigation }) {
         {(props) => (
           <View>
             <Text>{error}</Text>
+            <Text>Email</Text>
+            <TextInput
+              style={globalStyles.input}
+              placeholder="Enter email"
+              onChangeText={props.handleChange("email")}
+              value={props.values.email}
+              marginBottom={10}
+            />
+            <Text>
+              <ErrorMessage name="email" />
+            </Text>
             <Text>Username</Text>
             <TextInput
               style={globalStyles.input}

@@ -15,6 +15,8 @@ import SettingsScreen from "./UserSettings/SettingsScreen";
 import DeleteAccountScreen from "./UserSettings/DeleteAccount";
 import ChangeUsernameScreen from "./UserSettings/ChangeUsername";
 import ChangePasswordScreen from "./UserSettings/ChangePassword";
+import ForgotPasswordScreen from "./UserSettings/ForgotPassword";
+
 import SplashScreen from "./SplashScreen";
 
 const useAuth = () => {
@@ -30,6 +32,10 @@ function HomeStack() {
       <StackHome.Screen name="Home" component={HomeScreen} />
       <StackHome.Screen name="Detail" component={DetailScreen} />
       <StackHome.Screen name="DeleteScreen" component={DeleteAccountScreen} />
+      <StackHome.Screen
+        name="ForgotPasswordLoggedIn"
+        component={ForgotPasswordScreen}
+      />
       <StackHome.Screen
         name="ChangeUsernameScreen"
         component={ChangeUsernameScreen}
@@ -60,6 +66,10 @@ function AuthStack() {
     <StackAuth.Navigator initialRouteName="Login">
       <StackAuth.Screen name="Login" component={LoginScreen} />
       <StackAuth.Screen name="SignUp" component={SignUpScreen} />
+      <StackAuth.Screen
+        name="ForgotPasswordLoggedOut"
+        component={ForgotPasswordScreen}
+      />
     </StackAuth.Navigator>
   );
 }

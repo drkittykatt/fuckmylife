@@ -69,7 +69,12 @@ export default function SettingsScreen({ navigation }) {
           navigation.navigate("ChangePasswordScreen");
         }}
       />
-      <Button title="Forgot Password" onPress={changeUsername} />
+      <Button
+        title="Forgot Password"
+        onPress={() => {
+          navigation.navigate("ForgotPasswordLoggedIn");
+        }}
+      />
       <Button
         title="Delete Account"
         onPress={() => {
