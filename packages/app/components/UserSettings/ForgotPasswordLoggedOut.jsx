@@ -7,58 +7,77 @@ import {
   Button,
   TextInput,
 } from "react-native";
-import * as SecureStore from "expo-secure-store";
 import { AccountContext } from "../AccountContext";
 import { globalStyles } from "../../styles/global";
 const { forgotPasswordSchema } = require("@whatsapp-clone/common");
 import { Formik, ErrorMessage } from "formik";
 
-export default function ForgotPasswordScreen2({}) {
+export default function ForgotPasswordLoggedOut({}) {
   const { user, setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
 
-  const generatePasscode = () => {
-    const myNumber = Math.random().toString(10).substring(2, 8);
-    const mypasscode = myNumber;
-    fetch("http://localhost:4000/settings/generatepasscode", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...user, mypasscode }),
-    })
-      .catch((err) => {
-        return;
-      })
-      .then((res) => {
-        if (!res || !res.ok || res.status >= 400) {
-          return;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (!data) return;
-        console.log(data);
-        setUser({ ...data });
-        if (data.status) {
-          setError(data.status);
-        } else if (data.loggedIn) {
-          console.log("no errors I guess");
-        }
-      });
-  };
-
   return (
     <View style={globalStyles.container}>
-      <View>
+      {/* <View>
         <Text>
           Click the button below to recieve a 6 digit passcode to the email
           associated with this account. Enter the 6 digit passcode below and
           then a new password 😘
         </Text>
         <Button title="Get 6 digit code" onPress={generatePasscode} />
-      </View>
+      </View> */}
+      <Formik
+        initialValues={{ email: "" }}
+        onSubmit={(values, actions) => {
+          const vals = { ...values };
+          actions.resetForm();
+          const myNumber = Math.random().toString(10).substring(2, 8);
+          const mypasscode = myNumber;
+          const email = vals.email;
+          fetch("http://localhost:4000/settings/generatepasscode", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ...user, email, mypasscode }),
+          })
+            .catch((err) => {
+              return;
+            })
+            .then((res) => {
+              if (!res || !res.ok || res.status >= 400) {
+                return;
+              }
+              return res.json();
+            })
+            .then((data) => {
+              if (!data) return;
+              console.log(data);
+              setUser({ ...data });
+              if (data.status) {
+                setError(data.status);
+              } else if (data.loggedIn) {
+                console.log("no errors I guess");
+              }
+            });
+        }}
+      >
+        {(props) => (
+          <View>
+            <Text>{error}</Text>
+            <Text>Enter the email associated with your account</Text>
+            <TextInput
+              style={globalStyles.input}
+              placeholder="Enter Email"
+              onChangeText={props.handleChange("email")}
+              value={props.values.email}
+              marginBottom={10}
+            />
+            <Button title="Get 6 digit code" onPress={props.handleSubmit} />
+          </View>
+        )}
+      </Formik>
       <Formik
         initialValues={{ passcode: "", passattempt1: "", passattempt2: "" }}
         validationSchema={forgotPasswordSchema}
@@ -96,7 +115,6 @@ export default function ForgotPasswordScreen2({}) {
       >
         {(props) => (
           <View>
-            <Text>{error}</Text>
             <Text>Enter the 6 digit passcode</Text>
             <TextInput
               style={globalStyles.input}

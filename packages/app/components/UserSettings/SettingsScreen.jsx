@@ -76,12 +76,6 @@ export default function SettingsScreen({ navigation }) {
         }}
       />
       <Button
-        title="Forgot Password 2"
-        onPress={() => {
-          navigation.navigate("ForgotPassword2");
-        }}
-      />
-      <Button
         title="Delete Account"
         onPress={() => {
           setActionTriggered("DELETE_MODAL_1");

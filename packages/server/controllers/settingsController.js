@@ -101,55 +101,64 @@ module.exports.handleUpdatePassword = async (req, res) => {
 
 module.exports.handleGeneratePasscode = async (req, res) => {
   console.log(req.body.mypasscode);
+  console.log(req.body.email);
   const existingUser = await pool.query(
-    "SELECT username, email from users WHERE username=$1",
-    [req.body.username]
+    "SELECT username, email from users WHERE email=$1",
+    [req.body.email]
   );
 
-  const userEmail = existingUser.rows[0].email;
-  console.log(userEmail);
+  if (existingUser.rowCount != 0) {
+    const userEmail = existingUser.rows[0].email;
+    console.log(userEmail);
 
-  if (req.body.mypasscode != null) {
-    // need to send an email to the user
+    if (req.body.mypasscode != null) {
+      // need to send an email to the user
 
-    let transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-        //  user: 'youremail@address.com',
-        //  pass: 'yourpassword'
-      },
-    });
+      let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+          //  user: 'youremail@address.com',
+          //  pass: 'yourpassword'
+        },
+      });
 
-    // send mail with defined transport object
-    let info = await transporter.sendMail({
-      from: "Nuubi support team " + process.env.EMAIL_USER, // sender address
-      // to: "email@email.com", // list of receivers
-      to: userEmail,
-      subject: "Requested password reset code", // Subject line
-      // text: "Wait where is this text?", // plain text body
-      html:
-        "<b>You requested a password reset! This is your code. If you didn't request a reset, you can ignore this message and nothing will happen. CODE: </b>" +
-        req.body.mypasscode, // html body
-    });
+      // send mail with defined transport object
+      let info = await transporter.sendMail({
+        from: "Nuubi support team " + process.env.EMAIL_USER, // sender address
+        // to: "email@email.com", // list of receivers
+        to: userEmail,
+        subject: "Requested password reset code", // Subject line
+        // text: "Wait where is this text?", // plain text body
+        html:
+          "<b>You requested a password reset! This is your code. If you didn't request a reset, you can ignore this message and nothing will happen. CODE: </b>" +
+          req.body.mypasscode, // html body
+      });
 
-    console.log("Message sent: %s", info.messageId);
+      console.log("Message sent: %s", info.messageId);
 
-    if (info.messageId != null) {
+      if (info.messageId != null) {
+        res.json({
+          ...req.body,
+          status:
+            "email with passcode successfully sent. Please check your email & you may need to check the spam folders if you don't see the email.",
+        });
+      }
+    } else {
       res.json({
         ...req.body,
         status:
-          "email with passcode successfully sent. Please check your email & you may need to check the spam folders if you don't see the email.",
+          "You need to generate a passcode. We don't have one on file for you yet.",
       });
+      console.log("no passcode");
     }
   } else {
     res.json({
       ...req.body,
-      status:
-        "You need to generate a passcode. We don't have one on file for you yet.",
+      status: "We don't have that email associated with any users.",
     });
-    console.log("no passcode");
+    console.log("user with this email does not exist");
   }
 };
 
@@ -157,23 +166,36 @@ module.exports.handleForgotPassword = async (req, res) => {
   console.log(req.body.passcode);
   console.log(req.body.mypasscode);
   const existingUser = await pool.query(
-    "SELECT username from users WHERE username=$1",
-    [req.body.username]
+    "SELECT username from users WHERE email=$1",
+    [req.body.email]
   );
 
-  if (req.body.passcode == req.body.mypasscode) {
-    const hashedPass = await bcrypt.hash(req.body.passattempt1, 10);
-    const updatePasswordQuery = await pool.query(
-      "UPDATE users SET passhash=$1 WHERE username=$2",
-      [hashedPass, existingUser.rows[0].username]
-    );
+  if (existingUser.rowCount != 0) {
+    if (req.body.passcode == req.body.mypasscode) {
+      const hashedPass = await bcrypt.hash(req.body.passattempt1, 10);
+      const updatePasswordQuery = await pool.query(
+        "UPDATE users SET passhash=$1 WHERE username=$2",
+        [hashedPass, existingUser.rows[0].username]
+      );
 
-    res.json({
-      ...req.body,
-      status: "password successfully updated",
-    });
+      if (req.body.loggedIn === true) {
+        res.json({
+          ...req.body,
+          status: "password successfully updated",
+        });
+      } else {
+        res.json({
+          ...req.body,
+          status:
+            "password successfully updated. You may now log in with your new password.",
+        });
+      }
+    } else {
+      res.json({ ...req.body, status: "Passcode is incorrect" });
+      console.log("wrong passcode");
+    }
   } else {
-    res.json({ ...req.body, status: "Passcode is incorrect" });
-    console.log("wrong passcode");
+    res.json({ ...req.body, status: "User with this email does not exist" });
+    console.log("user with this email does not exist");
   }
 };

@@ -81,6 +81,12 @@ export default function LoginScreen({ navigation }) {
                 onPress={() => navigation.navigate("SignUp")}
               />
             </View>
+            <Button
+              title="Forgot Password"
+              onPress={() => {
+                navigation.navigate("ForgotPasswordLoggedOut");
+              }}
+            />
           </View>
         )}
       </Formik>

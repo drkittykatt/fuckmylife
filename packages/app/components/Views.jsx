@@ -16,7 +16,7 @@ import DeleteAccountScreen from "./UserSettings/DeleteAccount";
 import ChangeUsernameScreen from "./UserSettings/ChangeUsername";
 import ChangePasswordScreen from "./UserSettings/ChangePassword";
 import ForgotPasswordScreen from "./UserSettings/ForgotPassword";
-import ForgotPasswordScreen2 from "./UserSettings/ForgotPassword2";
+import ForgotPasswordLoggedOut from "./UserSettings/ForgotPasswordLoggedOut";
 
 import SplashScreen from "./SplashScreen";
 
@@ -36,10 +36,6 @@ function HomeStack() {
       <StackHome.Screen
         name="ForgotPasswordLoggedIn"
         component={ForgotPasswordScreen}
-      />
-      <StackHome.Screen
-        name="ForgotPassword2"
-        component={ForgotPasswordScreen2}
       />
       <StackHome.Screen
         name="ChangeUsernameScreen"
@@ -73,7 +69,7 @@ function AuthStack() {
       <StackAuth.Screen name="SignUp" component={SignUpScreen} />
       <StackAuth.Screen
         name="ForgotPasswordLoggedOut"
-        component={ForgotPasswordScreen}
+        component={ForgotPasswordLoggedOut}
       />
     </StackAuth.Navigator>
   );
