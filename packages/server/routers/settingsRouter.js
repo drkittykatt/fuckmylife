@@ -13,6 +13,7 @@ const {
   handleGeneratePasscode,
 } = require("../controllers/settingsController");
 const validateChangePasswordForm = require("../controllers/validateChangePasswordForm");
+const validateForgotPasswordForm = require("../controllers/validateForgotPasswordForm");
 require("dotenv").config();
 
 router.post("/delete", handleDeleteAccount);
@@ -31,7 +32,7 @@ router.post("/generatepasscode", handleGeneratePasscode);
 // add validation
 router.post(
   "/forgotpassword",
-  // validateForgotPasswordForm,
+  validateForgotPasswordForm,
   handleForgotPassword
 );
 

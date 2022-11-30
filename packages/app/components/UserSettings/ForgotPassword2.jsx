@@ -19,9 +19,6 @@ export default function ForgotPasswordScreen2({}) {
 
   const generatePasscode = () => {
     const myNumber = Math.random().toString(10).substring(2, 8);
-    console.log(
-      "generatePasscode activated. Passcode has been set to: " + myNumber
-    );
     const mypasscode = myNumber;
     fetch("http://localhost:4000/settings/generatepasscode", {
       method: "POST",
@@ -67,8 +64,6 @@ export default function ForgotPasswordScreen2({}) {
         validationSchema={forgotPasswordSchema}
         onSubmit={(values, actions) => {
           const vals = { ...values };
-          console.log("SECOND button clicked");
-          console.log({ ...user, ...vals });
           actions.resetForm();
           fetch("http://localhost:4000/settings/forgotpassword", {
             method: "POST",
