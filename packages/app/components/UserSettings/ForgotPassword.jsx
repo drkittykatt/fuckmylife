@@ -26,6 +26,12 @@ export default function ForgotPasswordScreen({}) {
         onSubmit={(values, actions) => {
           const vals = { ...values };
           console.log("SECOND button clicked");
+          React.useEffect(() => {
+            if (truePasscode) {
+              console.log("this is from the effect hook" + truePasscode);
+              truePasscode = truePasscode;
+            }
+          }, [id]);
           console.log(truePasscode);
           console.log(vals.passcode);
           const validatePasscode = vals.passcode === truePasscode;

@@ -97,30 +97,55 @@ module.exports.handleUpdatePassword = async (req, res) => {
   }
 };
 
-module.exports.handleForgotPassword = async (req, res) => {
-  console.log(req.body.passcode);
+module.exports.handleGeneratePasscode = async (req, res) => {
+  // this all still needs to be tested
+  console.log(req.body.mypasscode);
   const existingUser = await pool.query(
     "SELECT username from users WHERE username=$1",
     [req.body.username]
   );
-  // will need to change this to whatever random number gets sent via email
-  // generate a random number when the "get 6 digit code" button is clicked
-  // and then send it via email in the same operation - front end work?
-  // may get both input & random number in front end & then compare here
-  if (req.body.passcode == "123456") {
-    const hashedPass = await bcrypt.hash(req.body.passattempt1, 10);
-    const updatePasswordQuery = await pool.query(
-      "UPDATE users SET passhash=$1 WHERE username=$2",
-      [hashedPass, existingUser.rows[0].username]
-    );
+
+  if (req.body.mypasscode != null) {
+    // need to send an email to the user
+    // may need to check and make sure the email got sent successfully before sendign the success status.
+    // res.json({
+    //   ...user,
+    //   loggedIn: true,
+    //   status:
+    //     "email with passcode successfully sent. Please check your email & you may need to check the spam folders if you don't see the email.",
+    // });
+    res.json({ ...req.body, status: "passcode saved in back end" });
+  } else {
+    res.json({
+      ...req.body,
+      status:
+        "You need to generate a passcode. We don't have one on file for you yet.",
+    });
+    console.log("no passcode");
+  }
+};
+
+module.exports.handleForgotPassword = async (req, res) => {
+  console.log(req.body.passcode);
+  console.log(req.body.mypasscode);
+  const existingUser = await pool.query(
+    "SELECT username from users WHERE username=$1",
+    [req.body.username]
+  );
+
+  if (req.body.passcode == req.body.mypasscode) {
+    // const hashedPass = await bcrypt.hash(req.body.passattempt1, 10);
+    // const updatePasswordQuery = await pool.query(
+    //   "UPDATE users SET passhash=$1 WHERE username=$2",
+    //   [hashedPass, existingUser.rows[0].username]
+    // );
 
     res.json({
-      loggedIn: true,
-      username: req.body.username,
+      ...req.body,
       status: "password successfully updated",
     });
   } else {
-    res.json({ username: req.body.username, status: "Passcode is incorrect" });
+    res.json({ ...req.body, status: "Passcode is incorrect" });
     console.log("wrong passcode");
   }
 };
