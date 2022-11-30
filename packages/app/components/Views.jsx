@@ -9,14 +9,22 @@ import { AccountContext } from "./AccountContext";
 
 import LoginScreen from "./Login/LoginScreen";
 import SignUpScreen from "./Login/SignUpScreen";
+
 import HomeScreen from "./HomeScreen";
 import DetailScreen from "./DetailScreen";
+
 import SettingsScreen from "./UserSettings/SettingsScreen";
 import DeleteAccountScreen from "./UserSettings/DeleteAccount";
 import ChangeUsernameScreen from "./UserSettings/ChangeUsername";
 import ChangePasswordScreen from "./UserSettings/ChangePassword";
 import ForgotPasswordScreen from "./UserSettings/ForgotPassword";
 import ForgotPasswordLoggedOut from "./UserSettings/ForgotPasswordLoggedOut";
+
+import GeneralGroupScreen from "./Groups/GeneralGroupScreen";
+import CreateGroupScreen from "./Groups/CreateGroupScreen";
+import JoinGroupScreen from "./Groups/JoinGroupScreen";
+import GroupListScreen from "./Groups/GroupListScreen";
+import MyGroupsScreen from "./Groups/MyGroupsScreen";
 
 import SplashScreen from "./SplashScreen";
 
@@ -49,12 +57,30 @@ function HomeStack() {
   );
 }
 
+const StackGroup = createNativeStackNavigator();
+
+function GroupStack() {
+  return (
+    <StackGroup.Navigator initialRouteName="GeneralGroupScreen">
+      <StackGroup.Screen
+        name="GeneralGroupScreen"
+        component={GeneralGroupScreen}
+      />
+      <StackGroup.Screen name="CreateGroup" component={CreateGroupScreen} />
+      <StackGroup.Screen name="JoinGroup" component={JoinGroupScreen} />
+      <StackGroup.Screen name="ViewAllGroups" component={GroupListScreen} />
+      <StackGroup.Screen name="ViewMyGroups" component={MyGroupsScreen} />
+    </StackGroup.Navigator>
+  );
+}
+
 const Tab = createBottomTabNavigator();
 
 function HomeTab() {
   return (
     <Tab.Navigator>
       <Tab.Screen name="HomeStack" component={HomeStack} />
+      <Tab.Screen name="GroupStack" component={GroupStack} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );

@@ -6,13 +6,40 @@ const { formSchema } = require("@whatsapp-clone/common");
 import { AccountContext } from "../AccountContext";
 import * as SecureStore from "expo-secure-store";
 
-export default function GroupListScreen({ navigation }) {
+export default function GeneralGroupScreen({ navigation }) {
   const { setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
 
   return (
     <View style={globalStyles.container}>
-      <Text>See the list of all the groups that exist</Text>
+      <Text>
+        Welcome to the general group screen. To be added: links to the other
+        stuff.
+      </Text>
+      <Button
+        title="Create Group"
+        onPress={() => {
+          navigation.navigate("CreateGroup");
+        }}
+      />
+      <Button
+        title="Join Existing Group"
+        onPress={() => {
+          navigation.navigate("JoinGroup");
+        }}
+      />
+      <Button
+        title="All Groups"
+        onPress={() => {
+          navigation.navigate("ViewAllGroups");
+        }}
+      />
+      <Button
+        title="My Groups"
+        onPress={() => {
+          navigation.navigate("ViewMyGroups");
+        }}
+      />
     </View>
   );
 }
