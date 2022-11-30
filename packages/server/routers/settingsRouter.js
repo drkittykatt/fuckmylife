@@ -29,7 +29,6 @@ router.post(
 );
 router.post("/generatepasscode", handleGeneratePasscode);
 
-// add validation
 router.post(
   "/forgotpassword",
   validateForgotPasswordForm,

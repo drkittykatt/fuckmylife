@@ -5,6 +5,7 @@ const app = express();
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
 const settingsRouter = require("./routers/settingsRouter");
+const groupRouter = require("./routers/groupRouter");
 
 const server = require("http").createServer(app);
 
@@ -25,6 +26,7 @@ app.use(
 app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/settings", settingsRouter);
+app.use("/groups", groupRouter);
 
 // app.get("/api", (req, res) => {
 //   //res.json("hi")
