@@ -49,7 +49,7 @@ export default function MyGroupsScreen({ navigation }) {
         groups.map((groups) => {
           return (
             <View>
-              <Text>{groups.name}</Text>
+              <Text key="group_id">{groups.name}</Text>
               <Button
                 title="See chats"
                 onPress={() => {

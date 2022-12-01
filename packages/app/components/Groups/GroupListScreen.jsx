@@ -38,7 +38,7 @@ export default function GroupListScreen({ navigation }) {
         groups.map((groups) => {
           return (
             <View>
-              <Text>{groups.name}</Text>
+              <Text key="id">{groups.name}</Text>
               <Button
                 title="Join group"
                 onPress={() => {
