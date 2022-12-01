@@ -9,10 +9,46 @@ import * as SecureStore from "expo-secure-store";
 export default function GroupListScreen({ navigation }) {
   const { setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
+  const [groups, setGroups] = React.useState([]);
+
+  const getGroups = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/groups/getgroups", {
+        credentials: "include",
+      });
+      const jsonData = await response.json();
+
+      setGroups(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  React.useEffect(() => {
+    getGroups();
+  }, []);
 
   return (
     <View style={globalStyles.container}>
-      <Text>See the list of all the groups that exist</Text>
+      <Text>These are the names of all the groups:</Text>
+      <Text>-------------------------------------------</Text>
+
+      {groups &&
+        groups.map((groups) => {
+          return (
+            <View>
+              <Text>{groups.name}</Text>
+              <Button
+                title="Join group"
+                onPress={() => {
+                  Alert.alert("Join group with id: " + groups.id);
+                }}
+              />
+
+              <Text>-------------------------------------------</Text>
+            </View>
+          );
+        })}
     </View>
   );
 }

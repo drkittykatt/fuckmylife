@@ -23,12 +23,6 @@ export default function GeneralGroupScreen({ navigation }) {
         }}
       />
       <Button
-        title="Join Existing Group"
-        onPress={() => {
-          navigation.navigate("JoinGroup");
-        }}
-      />
-      <Button
         title="All Groups"
         onPress={() => {
           navigation.navigate("ViewAllGroups");
