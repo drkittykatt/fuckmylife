@@ -7,7 +7,7 @@ import { AccountContext } from "../AccountContext";
 import * as SecureStore from "expo-secure-store";
 
 export default function GroupListScreen({ navigation }) {
-  const { setUser } = React.useContext(AccountContext);
+  const { user, setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
   const [groups, setGroups] = React.useState([]);
 
@@ -42,6 +42,36 @@ export default function GroupListScreen({ navigation }) {
                 title="Join group"
                 onPress={() => {
                   Alert.alert("Join group with id: " + groups.id);
+                  const joinGroupId = groups.id;
+                  fetch("http://localhost:4000/groups/joingroup", {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ ...user, joinGroupId }),
+                  })
+                    .catch((err) => {
+                      return;
+                    })
+                    .then((res) => {
+                      if (!res || !res.ok || res.status >= 400) {
+                        return;
+                      }
+                      return res.json();
+                    })
+                    .then((data) => {
+                      if (!data) return;
+                      console.log(data);
+                      setUser({ ...data });
+                      if (data.status) {
+                        setError(data.status);
+                      } else if (data.loggedIn) {
+                        console.log("no errors I guess");
+                      }
+                    });
+                  // can set joinGroupId to groups.id?? Or do I need to use state for this?
+                  // then pass to back end joinGroup controller along with userId
                 }}
               />
 

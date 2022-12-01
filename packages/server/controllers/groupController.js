@@ -36,3 +36,16 @@ module.exports.getAllGroups = async (req, res) => {
   //   res.send(result);
   res.send(allGroupsQuery.rows);
 };
+
+module.exports.handleJoinGroup = async (req, res) => {
+  console.log("handle join group triggered");
+  console.log(
+    "userId: " + req.body.userId + ", joinGroupId: " + req.body.joinGroupId
+  );
+
+  // now check to see if the user is already a participant or not. If not, add them to the group.
+  res.json({
+    ...req.body,
+    status: "succesfully sent to back end",
+  });
+};
