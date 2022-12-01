@@ -8,6 +8,7 @@ const UserContext = ({ children }) => {
     loggedIn: null,
     token: SecureStore.getItemAsync("token"),
     userId: null,
+    currentGroup: null,
   });
   useEffect(() => {
     // fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {

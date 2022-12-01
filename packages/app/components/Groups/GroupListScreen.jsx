@@ -30,6 +30,7 @@ export default function GroupListScreen({ navigation }) {
 
   return (
     <View style={globalStyles.container}>
+      <Text>{error}</Text>
       <Text>These are the names of all the groups:</Text>
       <Text>-------------------------------------------</Text>
 
@@ -41,8 +42,7 @@ export default function GroupListScreen({ navigation }) {
               <Button
                 title="Join group"
                 onPress={() => {
-                  Alert.alert("Join group with id: " + groups.id);
-                  const joinGroupId = groups.id;
+                  const joinGroupId = groups.groups_id;
                   fetch("http://localhost:4000/groups/joingroup", {
                     method: "POST",
                     credentials: "include",
@@ -70,8 +70,6 @@ export default function GroupListScreen({ navigation }) {
                         console.log("no errors I guess");
                       }
                     });
-                  // can set joinGroupId to groups.id?? Or do I need to use state for this?
-                  // then pass to back end joinGroup controller along with userId
                 }}
               />
 

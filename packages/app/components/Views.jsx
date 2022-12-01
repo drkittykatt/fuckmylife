@@ -25,6 +25,7 @@ import CreateGroupScreen from "./Groups/CreateGroupScreen";
 import JoinGroupScreen from "./Groups/JoinGroupScreen";
 import GroupListScreen from "./Groups/GroupListScreen";
 import MyGroupsScreen from "./Groups/MyGroupsScreen";
+import ChatScreen from "./Chat/ChatScreen";
 
 import SplashScreen from "./SplashScreen";
 
@@ -70,6 +71,7 @@ function GroupStack() {
       <StackGroup.Screen name="JoinGroup" component={JoinGroupScreen} />
       <StackGroup.Screen name="ViewAllGroups" component={GroupListScreen} />
       <StackGroup.Screen name="ViewMyGroups" component={MyGroupsScreen} />
+      <StackGroup.Screen name="ChatScreen" component={ChatScreen} />
     </StackGroup.Navigator>
   );
 }
