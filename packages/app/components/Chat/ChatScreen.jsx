@@ -5,11 +5,20 @@ import { globalStyles } from "../../styles/global";
 const { addMessageSchema } = require("@whatsapp-clone/common");
 import { AccountContext } from "../AccountContext";
 import * as SecureStore from "expo-secure-store";
+import socket from "../../socket.js";
 
 export default function ChatScreen({ navigation }) {
   const { user, setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
   const [chats, setChats] = React.useState([]);
+  const [messages, setMessages] = React.useState([]);
+
+  // React.useEffect(() => {
+  //   fetch("http://localhost:4000/groupchat/getmessages")
+  //     .then((res) => res.json())
+  //     .then(setMessages)
+  //     .catch(console.log);
+  // }, []);
 
   const getChats = async () => {
     try {
@@ -37,6 +46,15 @@ export default function ChatScreen({ navigation }) {
     getChats();
   }, []);
 
+  // new
+  React.useEffect(() => {
+    if (socket) {
+      socket.on("chat message", (msgs) => {
+        setChats(msgs);
+      });
+    }
+  }, []);
+
   return (
     <View style={globalStyles.container}>
       <Text>Here is your chat for this group with id: {user.currentGroup}</Text>
@@ -53,10 +71,9 @@ export default function ChatScreen({ navigation }) {
           //chats or messages here? chats.text or messages.text?
           return (
             <View key={chats.messages_id}>
-              <Text>{chats.text}</Text>
-              <Text>Sent by: {chats.sender_username}</Text>
-              <Text>~*message id*~ ~*{chats.messages_id}*~</Text>
-              <Text>-------------------------------------------</Text>
+              <Text>
+                {chats.text} ~{chats.sender_username}
+              </Text>
             </View>
           );
         })}

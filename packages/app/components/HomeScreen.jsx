@@ -3,10 +3,12 @@ import { Button, Text, View, SafeAreaView, StyleSheet } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { AccountContext } from "./AccountContext";
 import useSocketSetup from "./useSocketSetup";
+const { io } = require("socket.io-client");
 
 export default function HomeScreen({ navigation }) {
   const { user, setUser } = React.useContext(AccountContext);
-  useSocketSetup; // do I want this here or just the chat screen?
+  const socket = io();
+  //useSocketSetup; // do I want this here or just the chat screen?
 
   const myUsername = user.username;
   const signOut = () => {
