@@ -8,14 +8,12 @@ module.exports.handleDeleteAccount = async (req, res) => {
     "SELECT username, passhash from users WHERE username=$1",
     [req.body.username]
   );
-  console.log(existingUser);
   if (existingUser.rowCount != 0) {
     // account exists and can be deleted
     const isSamePass = await bcrypt.compare(
       req.body.passattempt,
       existingUser.rows[0].passhash
     );
-    console.log(isSamePass);
 
     if (isSamePass) {
       const deleteUserQuery = await pool.query(
@@ -25,7 +23,6 @@ module.exports.handleDeleteAccount = async (req, res) => {
       res.json({ loggedIn: false, status: "User successfully deleted" });
     } else {
       res.json({ username: req.body.username, status: "Wrong password!" });
-      console.log("wrong password");
     }
   } else {
     res.json({ loggedIn: false, status: "User does not exist" });
@@ -64,11 +61,9 @@ module.exports.handleUpdateUsername = async (req, res) => {
         username: req.body.username,
         status: "Username is already taken!",
       });
-      console.log("username not available");
     }
   } else {
     res.json({ username: req.body.username, status: "Wrong password!" });
-    console.log("wrong password");
   }
 };
 
@@ -95,13 +90,10 @@ module.exports.handleUpdatePassword = async (req, res) => {
     });
   } else {
     res.json({ username: req.body.username, status: "Wrong password!" });
-    console.log("wrong password");
   }
 };
 
 module.exports.handleGeneratePasscode = async (req, res) => {
-  console.log(req.body.mypasscode);
-  console.log(req.body.email);
   const existingUser = await pool.query(
     "SELECT username, email from users WHERE email=$1",
     [req.body.email]
@@ -109,7 +101,6 @@ module.exports.handleGeneratePasscode = async (req, res) => {
 
   if (existingUser.rowCount != 0) {
     const userEmail = existingUser.rows[0].email;
-    console.log(userEmail);
 
     if (req.body.mypasscode != null) {
       // need to send an email to the user
@@ -136,7 +127,7 @@ module.exports.handleGeneratePasscode = async (req, res) => {
           req.body.mypasscode, // html body
       });
 
-      console.log("Message sent: %s", info.messageId);
+      // console.log("Message sent: %s", info.messageId);
 
       if (info.messageId != null) {
         res.json({
@@ -151,20 +142,16 @@ module.exports.handleGeneratePasscode = async (req, res) => {
         status:
           "You need to generate a passcode. We don't have one on file for you yet.",
       });
-      console.log("no passcode");
     }
   } else {
     res.json({
       ...req.body,
       status: "We don't have that email associated with any users.",
     });
-    console.log("user with this email does not exist");
   }
 };
 
 module.exports.handleForgotPassword = async (req, res) => {
-  console.log(req.body.passcode);
-  console.log(req.body.mypasscode);
   const existingUser = await pool.query(
     "SELECT username from users WHERE email=$1",
     [req.body.email]
@@ -192,10 +179,8 @@ module.exports.handleForgotPassword = async (req, res) => {
       }
     } else {
       res.json({ ...req.body, status: "Passcode is incorrect" });
-      console.log("wrong passcode");
     }
   } else {
     res.json({ ...req.body, status: "User with this email does not exist" });
-    console.log("user with this email does not exist");
   }
 };

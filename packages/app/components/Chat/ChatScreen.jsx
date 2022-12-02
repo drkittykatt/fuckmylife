@@ -5,6 +5,7 @@ import { globalStyles } from "../../styles/global";
 const { addMessageSchema } = require("@whatsapp-clone/common");
 import { AccountContext } from "../AccountContext";
 import * as SecureStore from "expo-secure-store";
+import socket from "../../socket";
 
 export default function ChatScreen({ navigation }) {
   const { user, setUser } = React.useContext(AccountContext);
@@ -22,7 +23,6 @@ export default function ChatScreen({ navigation }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ ...user }),
-          // need currentGroup id, which should be in here
         }
       );
       const jsonData = await response.json();
@@ -37,16 +37,19 @@ export default function ChatScreen({ navigation }) {
     getChats();
   }, []);
 
+  React.useEffect(() => {
+    socket.on("chat message", (msg) => {
+      // setChats(jsonData);
+      console.log("from useeffect socket: " + msg);
+    });
+  }, [socket]);
+
   return (
     <View style={globalStyles.container}>
       <Text>Here is your chat for this group with id: {user.currentGroup}</Text>
 
       {/* now add list of messages here */}
 
-      <Text>
-        Insert all the chats for this group here, in order of asc or desc (?)
-        time created
-      </Text>
       <Text>-------------------------------------------</Text>
       {chats &&
         chats.map((chats) => {
@@ -62,41 +65,42 @@ export default function ChatScreen({ navigation }) {
         })}
       <View style={styles.bottomView}>
         <Formik
-          initialValues={{ sendmessage: "" }}
+          initialValues={{ mymessage: "" }}
           validationSchema={addMessageSchema}
           // add validation to make sure character limits are not exceeded for both entries
           // add validation to make sure the message isn't null
           onSubmit={(values, actions) => {
             const vals = { ...values };
-            console.log("submit button triggered");
+            console.log("user submitted this message: " + vals.mymessage);
             actions.resetForm();
-            fetch("http://localhost:4000/groupchat/addmessage", {
-              method: "POST",
-              credentials: "include",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ ...user, ...vals }),
-            })
-              .catch((err) => {
-                return;
-              })
-              .then((res) => {
-                if (!res || !res.ok || res.status >= 400) {
-                  return;
-                }
-                return res.json();
-              })
-              .then((data) => {
-                if (!data) return;
-                console.log(data);
-                setUser({ ...data });
-                if (data.status) {
-                  setError(data.status);
-                } else if (data.loggedIn) {
-                  SecureStore.setItemAsync("token", data.token);
-                }
-              });
+            socket.emit("chat message", vals.mymessage);
+            // fetch("http://localhost:4000/groupchat/addmessage", {
+            //   method: "POST",
+            //   credentials: "include",
+            //   headers: {
+            //     "Content-Type": "application/json",
+            //   },
+            //   body: JSON.stringify({ ...user, ...vals }),
+            // })
+            //   .catch((err) => {
+            //     return;
+            //   })
+            //   .then((res) => {
+            //     if (!res || !res.ok || res.status >= 400) {
+            //       return;
+            //     }
+            //     return res.json();
+            //   })
+            //   .then((data) => {
+            //     if (!data) return;
+            //     console.log(data);
+            //     setUser({ ...data });
+            //     if (data.status) {
+            //       setError(data.status);
+            //     } else if (data.loggedIn) {
+            //       SecureStore.setItemAsync("token", data.token);
+            //     }
+            //   });
           }}
         >
           {(props) => (
