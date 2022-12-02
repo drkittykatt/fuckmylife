@@ -33,16 +33,15 @@ export default function GroupListScreen({ navigation }) {
       <Text>{error}</Text>
       <Text>These are the names of all the groups:</Text>
       <Text>-------------------------------------------</Text>
-
       {groups &&
         groups.map((groups) => {
           return (
-            <View>
-              <Text key="id">{groups.name}</Text>
+            <View key={groups.id}>
+              <Text>{groups.name}</Text>
               <Button
                 title="Join group"
                 onPress={() => {
-                  const joinGroupId = groups.groups_id;
+                  const joinGroupId = groups.id;
                   fetch("http://localhost:4000/groups/joingroup", {
                     method: "POST",
                     credentials: "include",
@@ -72,7 +71,6 @@ export default function GroupListScreen({ navigation }) {
                     });
                 }}
               />
-
               <Text>-------------------------------------------</Text>
             </View>
           );

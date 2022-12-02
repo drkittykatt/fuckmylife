@@ -1,5 +1,4 @@
 const pool = require("../db");
-const bcrypt = require("bcrypt");
 
 module.exports.handleCreateGroup = async (req, res) => {
   console.log("req.body is equal to: " + req.body);
@@ -33,7 +32,7 @@ module.exports.getAllGroups = async (req, res) => {
   res.send(allGroupsQuery.rows);
 };
 
-// I still need to edit all this. It's just copied from getAllGroups.
+// I still need to edit this a bit
 module.exports.getMyGroups = async (req, res) => {
   const myGroupsQuery = await pool.query(
     "SELECT groups.id group_id, groups.name, groups.description, participants.user_id user_id FROM groups INNER JOIN participants ON groups.id = participants.group_id WHERE participants.user_id = $1;",

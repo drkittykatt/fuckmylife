@@ -49,9 +49,16 @@ const forgotPasswordSchema = Yup.object({
     .oneOf([Yup.ref("passattempt1"), null], "Passwords don't match!"),
 });
 
+const addMessageSchema = Yup.object({
+  mymessage: Yup.string()
+    .required("Message is required")
+    .min(1, "message too short!"),
+});
+
 module.exports = {
   formSchema,
   newPasswordSchema,
   formSignupSchema,
   forgotPasswordSchema,
+  addMessageSchema,
 };

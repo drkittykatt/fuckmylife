@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const validateChangeUsernameForm = require("../controllers/validateChangeUsernameForm");
+const validateChangeUsernameForm = require("../controllers/validation/validateChangeUsernameForm");
 const pool = require("../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -12,8 +12,8 @@ const {
   handleForgotPassword,
   handleGeneratePasscode,
 } = require("../controllers/settingsController");
-const validateChangePasswordForm = require("../controllers/validateChangePasswordForm");
-const validateForgotPasswordForm = require("../controllers/validateForgotPasswordForm");
+const validateChangePasswordForm = require("../controllers/validation/validateChangePasswordForm");
+const validateForgotPasswordForm = require("../controllers/validation/validateForgotPasswordForm");
 require("dotenv").config();
 
 router.post("/delete", handleDeleteAccount);
