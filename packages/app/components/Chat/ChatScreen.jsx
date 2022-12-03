@@ -38,9 +38,10 @@ export default function ChatScreen({ navigation }) {
   }, []);
 
   React.useEffect(() => {
-    socket.on("chat message", (msg) => {
-      // setChats(jsonData);
-      console.log("from useeffect socket: " + msg);
+    socket.on("insert msg return updated list", (jsonData) => {
+      console.log("is this even doing anything");
+      setChats(jsonData);
+      getChats();
     });
   }, [socket]);
 
@@ -56,10 +57,9 @@ export default function ChatScreen({ navigation }) {
           //chats or messages here? chats.text or messages.text?
           return (
             <View key={chats.messages_id}>
-              <Text>{chats.text}</Text>
-              <Text>Sent by: {chats.sender_username}</Text>
-              <Text>~*message id*~ ~*{chats.messages_id}*~</Text>
-              <Text>-------------------------------------------</Text>
+              <Text>
+                {chats.text} ~{chats.sender_username}
+              </Text>
             </View>
           );
         })}
@@ -71,9 +71,10 @@ export default function ChatScreen({ navigation }) {
           // add validation to make sure the message isn't null
           onSubmit={(values, actions) => {
             const vals = { ...values };
+            const uservals = { ...user, ...values };
             console.log("user submitted this message: " + vals.mymessage);
             actions.resetForm();
-            socket.emit("chat message", vals.mymessage);
+            socket.emit("insert msg return updated list", uservals);
             // fetch("http://localhost:4000/groupchat/addmessage", {
             //   method: "POST",
             //   credentials: "include",
