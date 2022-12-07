@@ -27,7 +27,10 @@ export default function HomeScreen({ navigation }) {
     <SafeAreaView style={container}>
       <Text>Hello, {myUsername}! </Text>
       <Button title="Sign out" onPress={signOut} />
-      <Button title="Detail" onPress={() => navigation.navigate("Detail")} />
+      <Text>
+        Add button for user settings and signout on this screen (modal?)
+      </Text>
+      <Text>Add list of groups</Text>
     </SafeAreaView>
   );
 }

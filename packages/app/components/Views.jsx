@@ -92,7 +92,11 @@ const StackAuth = createNativeStackNavigator();
 
 function AuthStack() {
   return (
-    <StackAuth.Navigator initialRouteName="Login">
+    <StackAuth.Navigator
+      initialRouteName="Splash"
+      screenOptions={{ headerShown: false }}
+    >
+      <StackAuth.Screen name="Splash" component={SplashScreen} />
       <StackAuth.Screen name="Login" component={LoginScreen} />
       <StackAuth.Screen name="SignUp" component={SignUpScreen} />
       <StackAuth.Screen
@@ -111,27 +115,17 @@ export default function Views() {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {
-        // state.isLoading ? (
-        //   // We haven't finished checking for the token yet
-        //   <Stack.Screen name="Splash" component={SplashScreen} />
-        // ) :
-        user.loggedIn == false ? (
-          // user isn't logged in
-          <Stack.Screen
-            name="Sign in"
-            component={AuthStack}
-            options={{
-              title: "Log in",
-              // When logging out, a pop animation feels intuitive
-              // animationTypeForReplace: state.isSignout ? "pop" : "push",
-            }}
-          />
-        ) : (
-          // User is logged in
-          <Stack.Screen name="HomeTabs" component={HomeTab} />
-        )
-      }
+      {user.loggedIn == false ? (
+        <Stack.Screen
+          name="Sign in"
+          component={AuthStack}
+          options={{
+            title: "Log in",
+          }}
+        />
+      ) : (
+        <Stack.Screen name="HomeTabs" component={HomeTab} />
+      )}
     </Stack.Navigator>
   );
 }
