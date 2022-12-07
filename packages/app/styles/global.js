@@ -43,9 +43,8 @@ export const globalStyles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
     borderRadius: 6,
-    minWidth: 160,
+    minWidth: 240,
     alignItems: "stretch",
-    //width: "100%",
   },
   separator: {
     marginVertical: 8,
@@ -86,6 +85,11 @@ export const globalStyles = StyleSheet.create({
     alignSelf: "flex-beginning",
     marginLeft: 15,
   },
+  topRightButton: {
+    paddingTop: 15,
+    alignSelf: "flex-end",
+    marginRight: 20,
+  },
   outlineButton: {
     alignItems: "center",
     justifyContent: "center",
@@ -97,5 +101,26 @@ export const globalStyles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "#34b7f1",
     borderRadius: 6,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
 });

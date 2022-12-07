@@ -94,7 +94,7 @@ export default function ForgotPasswordLoggedOut({ navigation }) {
             </View>
           )}
         </Formik>
-        <View style={{ marginVertical: 10 }}></View>
+        <View style={{ marginVertical: 30 }}></View>
         <Formik
           initialValues={{ passcode: "", passattempt1: "", passattempt2: "" }}
           validationSchema={forgotPasswordSchema}

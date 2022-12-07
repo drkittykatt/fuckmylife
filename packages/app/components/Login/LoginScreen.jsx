@@ -54,6 +54,7 @@ export default function LoginScreen({ navigation }) {
         >
           {(props) => (
             <View>
+              <View style={{ marginVertical: -50 }}></View>
               <Text style={globalStyles.headerText}>Log in</Text>
               <View style={{ marginVertical: 5 }}></View>
               <View style={{ marginHorizontal: 30 }}>

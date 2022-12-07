@@ -38,7 +38,10 @@ const StackHome = createNativeStackNavigator();
 
 function HomeStack() {
   return (
-    <StackHome.Navigator initialRouteName="Home">
+    <StackHome.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
       <StackHome.Screen name="Home" component={HomeScreen} />
       <StackHome.Screen name="Detail" component={DetailScreen} />
       <StackHome.Screen name="DeleteScreen" component={DeleteAccountScreen} />
@@ -80,10 +83,9 @@ const Tab = createBottomTabNavigator();
 
 function HomeTab() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="HomeStack" component={HomeStack} />
       <Tab.Screen name="GroupStack" component={GroupStack} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
 }

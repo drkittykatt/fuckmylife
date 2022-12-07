@@ -54,6 +54,7 @@ export default function SignUpScreen({ navigation }) {
         >
           {(props) => (
             <View>
+              <View style={{ marginVertical: -50 }}></View>
               <Text style={globalStyles.headerText}>Sign up</Text>
               <View style={{ marginVertical: 5 }}></View>
               <View style={{ marginHorizontal: 30 }}>

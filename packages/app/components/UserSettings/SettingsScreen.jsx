@@ -11,6 +11,8 @@ import {
 import { AccountContext } from "../AccountContext";
 import { globalStyles } from "../../styles/global";
 import ChangePasswordScreen from "./ChangePassword";
+import socket from "../../socket";
+import * as SecureStore from "expo-secure-store";
 
 export default function SettingsScreen({ navigation }) {
   const [actionTriggered, setActionTriggered] = React.useState("");
@@ -19,98 +21,85 @@ export default function SettingsScreen({ navigation }) {
   const [error, setError] = React.useState(null);
   const myUsername = user.username;
   const changeUsername = null;
-  const { container } = styles;
+
+  const signOut = () => {
+    SecureStore.deleteItemAsync("userToken");
+    setUser({ loggedIn: false });
+    socket.disconnect();
+  };
 
   return (
-    <SafeAreaView style={container}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(false);
-        }}
-      >
-        <View style={styles.centeredView}>
-          {actionTriggered === "DELETE_MODAL_1" ? (
-            <View style={styles.modalView}>
-              <Text>
-                Are you sure you want to PERMANENTLY delete your account? This
-                action cannot be undone.
-              </Text>
-              <Button
-                title="No, go back"
-                onPress={() => setModalVisible(false)}
-              />
-              <Button
-                title="Yes!! Let me delete!! 😡"
-                onPress={() => {
-                  setModalVisible(false);
-                  navigation.navigate("DeleteScreen");
-                }}
-              />
-            </View>
-          ) : actionTriggered === "DELETE_MODAL_4" ? (
-            setModalVisible(false)
-          ) : null}
-        </View>
-      </Modal>
-      <Text>{myUsername}'s Account Settings</Text>
-      <Button
-        title="Change Username"
-        onPress={() => {
-          navigation.navigate("ChangeUsernameScreen");
-        }}
-      />
-      <Button
-        title="Change Password"
-        onPress={() => {
-          navigation.navigate("ChangePasswordScreen");
-        }}
-      />
-      <Button
-        title="Forgot Password"
-        onPress={() => {
-          navigation.navigate("ForgotPasswordLoggedIn");
-        }}
-      />
-      <Button
-        title="Delete Account"
-        onPress={() => {
-          setActionTriggered("DELETE_MODAL_1");
-          setModalVisible(true);
-        }}
-      />
+    <SafeAreaView style={globalStyles.container}>
+      <View style={{ marginVertical: -20 }}></View>
+      <View style={globalStyles.backButton}>
+        <Button title="< Home" onPress={() => navigation.navigate("Home")} />
+      </View>
+      <View style={globalStyles.container}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setModalVisible(false);
+          }}
+        >
+          <View style={globalStyles.centeredView}>
+            {actionTriggered === "DELETE_MODAL_1" ? (
+              <View style={globalStyles.modalView}>
+                <Text>
+                  Are you sure you want to PERMANENTLY delete your account? This
+                  action cannot be undone.
+                </Text>
+                <Button
+                  title="No, go back"
+                  onPress={() => setModalVisible(false)}
+                />
+                <Button
+                  title="Yes!! Let me delete!! 😡"
+                  onPress={() => {
+                    setModalVisible(false);
+                    navigation.navigate("DeleteScreen");
+                  }}
+                />
+              </View>
+            ) : actionTriggered === "DELETE_MODAL_4" ? (
+              setModalVisible(false)
+            ) : null}
+          </View>
+        </Modal>
+        <Text style={globalStyles.headerText}>Hi {myUsername}!</Text>
+        <Text style={{ padding: 20 }}>
+          Insert some key analytics here and add a button to see more detailed
+          analytics
+        </Text>
+        <Button
+          title="Change Username"
+          onPress={() => {
+            navigation.navigate("ChangeUsernameScreen");
+          }}
+        />
+        <Button
+          title="Change Password"
+          onPress={() => {
+            navigation.navigate("ChangePasswordScreen");
+          }}
+        />
+        <Button
+          title="Forgot Password"
+          onPress={() => {
+            navigation.navigate("ForgotPasswordLoggedIn");
+          }}
+        />
+        <Button title="Sign out" onPress={signOut} />
+        <Button
+          title="Delete Account"
+          onPress={() => {
+            setActionTriggered("DELETE_MODAL_1");
+            setModalVisible(true);
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-});
