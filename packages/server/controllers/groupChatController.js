@@ -15,7 +15,7 @@ module.exports.addMessage = async (req, res) => {
 // I still need to edit this a bit
 module.exports.getMessages = async (req, res) => {
   const getMessagesQuery = await pool.query(
-    "SELECT username sender_username, text, messages.id messages_id, messages.created_at sent_at FROM messages INNER JOIN users ON messages.sender_id = users.id WHERE messages.group_id = $1 ORDER BY messages.created_at ASC",
+    "SELECT username sender_username, text, messages.id messages_id, messages.created_at sent_at FROM messages INNER JOIN users ON messages.sender_id = users.id WHERE messages.group_id = $1 ORDER BY messages.created_at DESC",
     [req.body.currentGroup]
   );
   res.send(getMessagesQuery.rows); // if this is null, check for that in the front end

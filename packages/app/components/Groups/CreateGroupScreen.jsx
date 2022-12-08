@@ -15,7 +15,7 @@ export default function CreateGroupScreen({ navigation }) {
       <View style={globalStyles.backButton}>
         <Button title="< Home" onPress={() => navigation.navigate("Home")} />
       </View>
-      <View style={globalStyles.container}>
+      <View>
         <Text>Welcome to the create group</Text>
         <Formik
           initialValues={{ groupname: "", description: "" }}

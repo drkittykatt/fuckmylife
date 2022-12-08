@@ -66,7 +66,7 @@ export default function ChangeUsernameScreen({ navigation }) {
           {(props) => (
             <View>
               <Text>{error}</Text>
-              <Text>Please enter your password to verify your identity</Text>
+              <Text>Password</Text>
               <TextInput
                 style={globalStyles.input}
                 placeholder="Enter Password"
@@ -78,7 +78,7 @@ export default function ChangeUsernameScreen({ navigation }) {
               <Text>
                 <ErrorMessage name="password" />
               </Text>
-              <Text>Please enter your desired new username</Text>
+              <Text>New username</Text>
               <TextInput
                 style={globalStyles.input}
                 placeholder="Enter username"
@@ -89,8 +89,13 @@ export default function ChangeUsernameScreen({ navigation }) {
               <Text>
                 <ErrorMessage name="username" />
               </Text>
-
-              <Button title="Update Username" onPress={props.handleSubmit} />
+              <View style={globalStyles.primaryButton}>
+                <Button
+                  color="white"
+                  title="Update Username"
+                  onPress={props.handleSubmit}
+                />
+              </View>
             </View>
           )}
         </Formik>

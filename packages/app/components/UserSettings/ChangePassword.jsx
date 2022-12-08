@@ -67,10 +67,10 @@ export default function ChangePasswordScreen({ navigation }) {
           {(props) => (
             <View>
               <Text>{error}</Text>
-              <Text>Please enter your password to verify your identity</Text>
+              <Text>Current password</Text>
               <TextInput
                 style={globalStyles.input}
-                placeholder="Enter Password"
+                placeholder="Enter password"
                 onChangeText={props.handleChange("password")}
                 value={props.values.password}
                 secureTextEntry={true}
@@ -79,7 +79,7 @@ export default function ChangePasswordScreen({ navigation }) {
               <Text>
                 <ErrorMessage name="password" />
               </Text>
-              <Text>Please enter your desired new password</Text>
+              <Text>New password</Text>
               <TextInput
                 style={globalStyles.input}
                 placeholder="Enter new password"
@@ -90,11 +90,10 @@ export default function ChangePasswordScreen({ navigation }) {
               <Text>
                 <ErrorMessage name="passattempt1" />
               </Text>
-
-              <Text>Please enter your desired new password again</Text>
+              <Text>New password</Text>
               <TextInput
                 style={globalStyles.input}
-                placeholder="Enter new password again"
+                placeholder="Repeat new password"
                 onChangeText={props.handleChange("passattempt2")}
                 value={props.values.passattempt2}
                 marginBottom={10}
@@ -102,8 +101,18 @@ export default function ChangePasswordScreen({ navigation }) {
               <Text>
                 <ErrorMessage name="passattempt2" />
               </Text>
+              <View style={globalStyles.primaryButton}>
+                <Button
+                  color="white"
+                  title="Update password"
+                  onPress={props.handleSubmit}
+                />
+              </View>
 
-              <Button title="Update Password" onPress={props.handleSubmit} />
+              <Button
+                title="Forgot password?"
+                onPress={() => navigation.navigate("ForgotPassword")}
+              />
             </View>
           )}
         </Formik>

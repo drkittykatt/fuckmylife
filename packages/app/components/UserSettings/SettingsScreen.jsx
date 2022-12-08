@@ -1,13 +1,5 @@
 import * as React from "react";
-import {
-  Text,
-  View,
-  SafeAreaView,
-  StyleSheet,
-  Button,
-  Modal,
-  TextInput,
-} from "react-native";
+import { Text, View, SafeAreaView, Button, Modal, Alert } from "react-native";
 import { AccountContext } from "../AccountContext";
 import { globalStyles } from "../../styles/global";
 import ChangePasswordScreen from "./ChangePassword";
@@ -63,42 +55,46 @@ export default function SettingsScreen({ navigation }) {
                   }}
                 />
               </View>
-            ) : actionTriggered === "DELETE_MODAL_4" ? (
-              setModalVisible(false)
             ) : null}
           </View>
         </Modal>
+        <View style={{ marginVertical: 40 }}></View>
         <Text style={globalStyles.headerText}>Hi {myUsername}!</Text>
-        <Text style={{ padding: 20 }}>
-          Insert some key analytics here and add a button to see more detailed
-          analytics
-        </Text>
-        <Button
-          title="Change Username"
-          onPress={() => {
-            navigation.navigate("ChangeUsernameScreen");
-          }}
-        />
-        <Button
-          title="Change Password"
-          onPress={() => {
-            navigation.navigate("ChangePasswordScreen");
-          }}
-        />
-        <Button
-          title="Forgot Password"
-          onPress={() => {
-            navigation.navigate("ForgotPasswordLoggedIn");
-          }}
-        />
-        <Button title="Sign out" onPress={signOut} />
-        <Button
-          title="Delete Account"
-          onPress={() => {
-            setActionTriggered("DELETE_MODAL_1");
-            setModalVisible(true);
-          }}
-        />
+        <View style={globalStyles.innerContainer}>
+          <View style={{ marginVertical: 20 }}></View>
+          <Button
+            title="My stats"
+            onPress={() => {
+              Alert.alert("to be added");
+            }}
+          />
+          <Button
+            title="Change username"
+            onPress={() => {
+              navigation.navigate("ChangeUsernameScreen");
+            }}
+          />
+          <Button
+            title="Change password"
+            onPress={() => {
+              navigation.navigate("ChangePasswordScreen");
+            }}
+          />
+          <Button
+            title="Forgot password"
+            onPress={() => {
+              navigation.navigate("ForgotPasswordLoggedIn");
+            }}
+          />
+          <Button title="Sign out" onPress={signOut} />
+          <Button
+            title="Delete account"
+            onPress={() => {
+              setActionTriggered("DELETE_MODAL_1");
+              setModalVisible(true);
+            }}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );

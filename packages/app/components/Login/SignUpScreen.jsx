@@ -14,7 +14,7 @@ export default function SignUpScreen({ navigation }) {
       <View style={globalStyles.backButton}>
         <Button title="< Home" onPress={() => navigation.navigate("Splash")} />
       </View>
-      <View style={globalStyles.container}>
+      <View>
         <Formik
           initialValues={{ email: "", username: "", password: "" }}
           validationSchema={formSignupSchema}

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 
 export const globalStyles = StyleSheet.create({
   titleText: {
@@ -36,6 +36,18 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: "#fdfdfd",
     alignItems: "center",
     justifyContent: "center",
+  },
+  container2: {
+    flex: 1,
+    backgroundColor: "#fdfdfd",
+    alignItems: "center",
+    marginTop: StatusBar.currentHeight || 100,
+    marginBottom: 150,
+  },
+  innerContainer: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+    marginBottom: 150,
   },
   input: {
     borderWidth: 1,
@@ -81,14 +93,16 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   backButton: {
-    paddingTop: 60,
     alignSelf: "flex-beginning",
     marginLeft: 15,
+    position: "absolute",
+    top: 70,
   },
   topRightButton: {
-    paddingTop: 15,
     alignSelf: "flex-end",
-    marginRight: 20,
+    position: "absolute",
+    paddingRight: 10,
+    top: 70,
   },
   outlineButton: {
     alignItems: "center",
@@ -131,10 +145,29 @@ export const globalStyles = StyleSheet.create({
     bottom: 40,
   },
   topView: {
-    width: "100%",
     justifyContent: "center",
     alignItems: "center",
     position: "absolute",
     top: -20,
+  },
+  item: {
+    backgroundColor: "#cdcdcd",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+
+  chatContainer: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0 + 150,
+    marginBottom: 200,
+    alignSelf: "flex-beginning",
+    marginLeft: 25,
+  },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+    color: "#333",
   },
 });

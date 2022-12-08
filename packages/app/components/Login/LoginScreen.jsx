@@ -15,7 +15,7 @@ export default function LoginScreen({ navigation }) {
       <View style={globalStyles.backButton}>
         <Button title="< Home" onPress={() => navigation.navigate("Splash")} />
       </View>
-      <View style={globalStyles.container}>
+      <View>
         <Formik
           initialValues={{ username: "", password: "" }}
           validationSchema={formSchema}

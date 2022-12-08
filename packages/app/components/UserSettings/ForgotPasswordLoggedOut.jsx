@@ -21,7 +21,8 @@ export default function ForgotPasswordLoggedOut({ navigation }) {
       <View style={globalStyles.backButton}>
         <Button title="< Login" onPress={() => navigation.navigate("Login")} />
       </View>
-      <View style={globalStyles.container}>
+      <View style={{ marginTop: 10 }}></View>
+      <View style={globalStyles.container2}>
         <Formik
           initialValues={{ email: "" }}
           onSubmit={(values, actions) => {
@@ -61,7 +62,6 @@ export default function ForgotPasswordLoggedOut({ navigation }) {
         >
           {(props) => (
             <View>
-              <View style={{ marginVertical: -40 }}></View>
               <Text style={globalStyles.headerText}>Forgot password</Text>
               <View style={{ marginVertical: 5 }}></View>
               <View style={{ marginHorizontal: 30 }}>
