@@ -45,6 +45,8 @@ export default function ChatScreen({ navigation }) {
     });
   }, [socket]);
 
+  const groupTitleButton = user.groupName;
+
   return (
     <View style={globalStyles.container}>
       <View style={globalStyles.backButton}>
@@ -59,9 +61,10 @@ export default function ChatScreen({ navigation }) {
       </View>
       <View style={globalStyles.container}>
         <View style={globalStyles.topView}>
-          <Text style={globalStyles.headerText}>
-            Group (id: {user.currentGroup})
-          </Text>
+          <Button
+            title={groupTitleButton}
+            onPress={() => Alert.alert("go to Chat Info screen")}
+          />
           <View style={globalStyles.fixToText}>
             <Button title="Chats" />
             <Button
