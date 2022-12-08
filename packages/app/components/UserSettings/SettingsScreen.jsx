@@ -24,9 +24,9 @@ export default function SettingsScreen({ navigation }) {
     <SafeAreaView style={globalStyles.container}>
       <View style={{ marginVertical: -20 }}></View>
       <View style={globalStyles.backButton}>
-        <Button title="< Home" onPress={() => navigation.navigate("Home")} />
+        <Button title="< Groups" onPress={() => navigation.navigate("Home")} />
       </View>
-      <View style={globalStyles.container}>
+      <View>
         <Modal
           animationType="slide"
           transparent={true}

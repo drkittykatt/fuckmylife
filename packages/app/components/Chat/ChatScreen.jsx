@@ -88,7 +88,7 @@ export default function ChatScreen({ navigation }) {
           style={globalStyles.button}
           onPress={() => navigation.navigate("Home")}
         >
-          <Text>{"<"} Home</Text>
+          <Text>{"<"} Groups</Text>
         </TouchableOpacity>
       </View>
       <View style={globalStyles.topRightButton}>

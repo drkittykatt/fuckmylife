@@ -1,5 +1,12 @@
 import * as React from "react";
-import { Button, View, Text, SafeAreaView, Image } from "react-native";
+import {
+  Button,
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { globalStyles } from "../styles/global";
 
 export default function SplashScreen({ navigation }) {
@@ -18,17 +25,22 @@ export default function SplashScreen({ navigation }) {
         </Text>
       </Text>
       <View style={{ marginVertical: 20 }}></View>
-      <View style={globalStyles.fixToText}>
-        <View style={globalStyles.secondaryButton}>
-          <Button title="Log in" onPress={() => navigation.navigate("Login")} />
+      <View style={globalStyles.buttonContainer}>
+        <View>
+          <TouchableOpacity
+            style={globalStyles.secondaryButton}
+            onPress={() => navigation.navigate("Login")}
+          >
+            <Text style={globalStyles.secondaryButtonText}>Log in</Text>
+          </TouchableOpacity>
         </View>
-        <View style={{ marginHorizontal: 15 }}></View>
-        <View style={globalStyles.primaryButton}>
-          <Button
-            title="Sign up"
-            color="#fdfdfd"
+        <View>
+          <TouchableOpacity
+            style={globalStyles.primaryButton}
             onPress={() => navigation.navigate("SignUp")}
-          />
+          >
+            <Text style={globalStyles.primaryButtonText}>Sign up</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
