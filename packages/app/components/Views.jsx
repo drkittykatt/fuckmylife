@@ -57,6 +57,30 @@ function HomeStack() {
         name="ChangePasswordScreen"
         component={ChangePasswordScreen}
       />
+      <StackHome.Screen
+        name="GeneralGroupScreen"
+        component={GeneralGroupScreen}
+      />
+      <StackHome.Screen name="CreateGroup" component={CreateGroupScreen} />
+      <StackHome.Screen name="JoinGroup" component={JoinGroupScreen} />
+      <StackHome.Screen name="ViewAllGroups" component={GroupListScreen} />
+      <StackHome.Screen name="ViewMyGroups" component={MyGroupsScreen} />
+      <StackHome.Screen name="ChatScreen" component={ChatScreen} />
+
+      <StackHome.Screen name="Settings" component={SettingsScreen} />
+      <StackHome.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
+      />
+      <StackHome.Screen name="DeleteAccount" component={DeleteAccountScreen} />
+      <StackHome.Screen
+        name="ChangeUsername"
+        component={ChangeUsernameScreen}
+      />
+      <StackHome.Screen
+        name="ChangePassword"
+        component={ChangePasswordScreen}
+      />
     </StackHome.Navigator>
   );
 }
@@ -79,16 +103,16 @@ function GroupStack() {
   );
 }
 
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
 
-function HomeTab() {
-  return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="HomeStack" component={HomeStack} />
-      <Tab.Screen name="GroupStack" component={GroupStack} />
-    </Tab.Navigator>
-  );
-}
+// function HomeTab() {
+//   return (
+//     <Tab.Navigator screenOptions={{ headerShown: false }}>
+//       <Tab.Screen name="HomeStack" component={HomeStack} />
+//       <Tab.Screen name="GroupStack" component={GroupStack} />
+//     </Tab.Navigator>
+//   );
+// }
 
 const StackAuth = createNativeStackNavigator();
 
@@ -126,7 +150,7 @@ export default function Views() {
           }}
         />
       ) : (
-        <Stack.Screen name="HomeTabs" component={HomeTab} />
+        <Stack.Screen name="HomeStack" component={HomeStack} />
       )}
     </Stack.Navigator>
   );

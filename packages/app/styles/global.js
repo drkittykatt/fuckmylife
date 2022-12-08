@@ -123,4 +123,18 @@ export const globalStyles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  bottomView: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 40,
+  },
+  topView: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    top: -20,
+  },
 });

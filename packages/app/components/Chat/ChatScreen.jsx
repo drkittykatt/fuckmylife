@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, TextInput, View, Text, StyleSheet, Alert } from "react-native";
+import { Button, TextInput, View, Text, Alert } from "react-native";
 import { Formik, ErrorMessage } from "formik";
 import { globalStyles } from "../../styles/global";
 const { addMessageSchema } = require("@whatsapp-clone/common");
@@ -47,112 +47,73 @@ export default function ChatScreen({ navigation }) {
 
   return (
     <View style={globalStyles.container}>
-      <Text>Here is your chat for this group with id: {user.currentGroup}</Text>
-
-      {/* now add list of messages here */}
-
-      <Text>-------------------------------------------</Text>
-      {chats &&
-        chats.map((chats) => {
-          //chats or messages here? chats.text or messages.text?
-          return (
-            <View key={chats.messages_id}>
-              <Text>
-                {chats.text} ~{chats.sender_username}
-              </Text>
-            </View>
-          );
-        })}
-      <View style={styles.bottomView}>
-        <Formik
-          initialValues={{ mymessage: "" }}
-          validationSchema={addMessageSchema}
-          // add validation to make sure character limits are not exceeded for both entries
-          // add validation to make sure the message isn't null
-          onSubmit={(values, actions) => {
-            const vals = { ...values };
-            const uservals = { ...user, ...values };
-            console.log("user submitted this message: " + vals.mymessage);
-            actions.resetForm();
-            socket.emit("insert msg return updated list", uservals);
-            // fetch("http://localhost:4000/groupchat/addmessage", {
-            //   method: "POST",
-            //   credentials: "include",
-            //   headers: {
-            //     "Content-Type": "application/json",
-            //   },
-            //   body: JSON.stringify({ ...user, ...vals }),
-            // })
-            //   .catch((err) => {
-            //     return;
-            //   })
-            //   .then((res) => {
-            //     if (!res || !res.ok || res.status >= 400) {
-            //       return;
-            //     }
-            //     return res.json();
-            //   })
-            //   .then((data) => {
-            //     if (!data) return;
-            //     console.log(data);
-            //     setUser({ ...data });
-            //     if (data.status) {
-            //       setError(data.status);
-            //     } else if (data.loggedIn) {
-            //       SecureStore.setItemAsync("token", data.token);
-            //     }
-            //   });
-          }}
-        >
-          {(props) => (
-            <View>
-              <Text>{error}</Text>
-              <Text>Send message</Text>
-              <TextInput
-                style={globalStyles.input}
-                placeholder="my message..."
-                onChangeText={props.handleChange("mymessage")}
-                value={props.values.mymessage}
-                marginBottom={10}
-              />
-              <Text>
-                <ErrorMessage name="mymessage" />
-              </Text>
-              <Button title="Send message" onPress={props.handleSubmit} />
-            </View>
-          )}
-        </Formik>
+      <View style={globalStyles.backButton}>
+        <Button title="< Home" onPress={() => navigation.navigate("Home")} />
+      </View>
+      <View style={{ marginVertical: -27 }}></View>
+      <View style={globalStyles.topRightButton}>
+        <Button
+          title="Me"
+          onPress={() => Alert.alert("add user/admin dashboard here")}
+        />
+      </View>
+      <View style={globalStyles.container}>
+        <View style={globalStyles.topView}>
+          <Text style={globalStyles.headerText}>
+            Group (id: {user.currentGroup})
+          </Text>
+          <View style={globalStyles.fixToText}>
+            <Button title="Chats" />
+            <Button
+              title="Posts"
+              onPress={() => Alert.alert("add posts here")}
+            />
+          </View>
+        </View>
+        {chats &&
+          chats.map((chats) => {
+            return (
+              <View key={chats.messages_id}>
+                <Text>
+                  {chats.text} ~{chats.sender_username}
+                </Text>
+              </View>
+            );
+          })}
+        <View style={globalStyles.bottomView}>
+          <Formik
+            initialValues={{ mymessage: "" }}
+            validationSchema={addMessageSchema}
+            // add validation to make sure character limits are not exceeded for both entries
+            // add validation to make sure the message isn't null
+            onSubmit={(values, actions) => {
+              const vals = { ...values };
+              const uservals = { ...user, ...values };
+              console.log("user submitted this message: " + vals.mymessage);
+              actions.resetForm();
+              socket.emit("insert msg return updated list", uservals);
+            }}
+          >
+            {(props) => (
+              <View>
+                <Text>{error}</Text>
+                <Text>Send message</Text>
+                <TextInput
+                  style={globalStyles.input}
+                  placeholder="my message..."
+                  onChangeText={props.handleChange("mymessage")}
+                  value={props.values.mymessage}
+                  marginBottom={10}
+                />
+                <Text>
+                  <ErrorMessage name="mymessage" />
+                </Text>
+                <Button title="Send message" onPress={props.handleSubmit} />
+              </View>
+            )}
+          </Formik>
+        </View>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    marginHorizontal: 16,
-  },
-  title: {
-    textAlign: "center",
-    marginVertical: 8,
-  },
-  fixToText: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: "#737373",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  bottomView: {
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute", //Here is the trick
-    bottom: 10, //Here is the trick
-  },
-});

@@ -11,96 +11,79 @@ export default function CreateGroupScreen({ navigation }) {
 
   return (
     <View style={globalStyles.container}>
-      <Text>Welcome to the create group</Text>
-      <Formik
-        initialValues={{ groupname: "", description: "" }}
-        // add validation to make sure character limits are not exceeded for both entries
-        onSubmit={(values, actions) => {
-          const vals = { ...values };
-          console.log("submit button triggered");
-          actions.resetForm();
-          fetch("http://localhost:4000/groups/creategroup", {
-            method: "POST",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ ...user, ...vals }),
-          })
-            .catch((err) => {
-              return;
+      <View style={{ marginVertical: -5 }}></View>
+      <View style={globalStyles.backButton}>
+        <Button title="< Home" onPress={() => navigation.navigate("Home")} />
+      </View>
+      <View style={globalStyles.container}>
+        <Text>Welcome to the create group</Text>
+        <Formik
+          initialValues={{ groupname: "", description: "" }}
+          // add validation to make sure character limits are not exceeded for both entries
+          onSubmit={(values, actions) => {
+            const vals = { ...values };
+            console.log("submit button triggered");
+            actions.resetForm();
+            fetch("http://localhost:4000/groups/creategroup", {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ ...user, ...vals }),
             })
-            .then((res) => {
-              if (!res || !res.ok || res.status >= 400) {
+              .catch((err) => {
                 return;
-              }
-              return res.json();
-            })
-            .then((data) => {
-              if (!data) return;
-              console.log(data);
-              setUser({ ...data });
-              if (data.status) {
-                setError(data.status);
-              } else if (data.loggedIn) {
-                SecureStore.setItemAsync("token", data.token);
-              }
-            });
-        }}
-      >
-        {(props) => (
-          <View>
-            <Text>{error}</Text>
-            <Text>Group Name</Text>
-            <TextInput
-              style={globalStyles.input}
-              placeholder="Enter group name"
-              onChangeText={props.handleChange("groupname")}
-              value={props.values.groupname}
-              marginBottom={10}
-            />
-            {/* <Text>
+              })
+              .then((res) => {
+                if (!res || !res.ok || res.status >= 400) {
+                  return;
+                }
+                return res.json();
+              })
+              .then((data) => {
+                if (!data) return;
+                console.log(data);
+                setUser({ ...data });
+                if (data.status) {
+                  setError(data.status);
+                } else if (data.loggedIn) {
+                  SecureStore.setItemAsync("token", data.token);
+                }
+              });
+          }}
+        >
+          {(props) => (
+            <View>
+              <Text>{error}</Text>
+              <Text>Group Name</Text>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Enter group name"
+                onChangeText={props.handleChange("groupname")}
+                value={props.values.groupname}
+                marginBottom={10}
+              />
+              {/* <Text>
               <ErrorMessage name="groupname" />
             </Text> */}
-            <Text>Description</Text>
-            <TextInput
-              // make the text box larger? Make sure it's maximum 255 characters.
-              style={globalStyles.input}
-              placeholder="Enter description"
-              onChangeText={props.handleChange("description")}
-              value={props.values.description}
-              marginBottom={10}
-            />
-            {/* <Text>
+              <Text>Description</Text>
+              <TextInput
+                // make the text box larger? Make sure it's maximum 255 characters.
+                style={globalStyles.input}
+                placeholder="Enter description"
+                onChangeText={props.handleChange("description")}
+                value={props.values.description}
+                marginBottom={10}
+              />
+              {/* <Text>
               <ErrorMessage name="description" />
             </Text> */}
-            <Button title="Create Group" onPress={props.handleSubmit} />
-          </View>
-        )}
-      </Formik>
+              <Button title="Create Group" onPress={props.handleSubmit} />
+            </View>
+          )}
+        </Formik>
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    marginHorizontal: 16,
-  },
-  title: {
-    textAlign: "center",
-    marginVertical: 8,
-  },
-  fixToText: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: "#737373",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-});

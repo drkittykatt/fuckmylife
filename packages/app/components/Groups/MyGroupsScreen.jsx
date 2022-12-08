@@ -35,15 +35,9 @@ export default function MyGroupsScreen({ navigation }) {
 
   return (
     <View style={globalStyles.container}>
-      <Text>
-        See the list of groups you're in here. (If you don't belong to any
-        groups , Show a message saying no groups yet, would you like to join a
-        group or create a new group?). Also add a button to be taken to the chat
-        screen for that group.
-      </Text>
-      <Text>-------------------------------------------</Text>
+      <View style={{ marginVertical: -230 }}></View>
+      <Text style={globalStyles.headerText}>My groups</Text>
       <Text>{error}</Text>
-      <Text>These are the names of all the groups you belong to :</Text>
       <Text>-------------------------------------------</Text>
       {groups &&
         groups.map((groups) => {
@@ -64,26 +58,3 @@ export default function MyGroupsScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    marginHorizontal: 16,
-  },
-  title: {
-    textAlign: "center",
-    marginVertical: 8,
-  },
-  fixToText: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-  },
-  separator: {
-    marginVertical: 8,
-    borderBottomColor: "#737373",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-});
