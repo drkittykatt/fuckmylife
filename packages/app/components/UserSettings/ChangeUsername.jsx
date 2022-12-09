@@ -25,7 +25,7 @@ export default function ChangeUsernameScreen({ navigation }) {
           onPress={() => navigation.navigate("Settings")}
         />
       </View>
-      <View style={globalStyles.container}>
+      <View>
         <Formik
           initialValues={{ username: "", password: "" }}
           validationSchema={formSchema}

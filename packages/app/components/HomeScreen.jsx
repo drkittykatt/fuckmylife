@@ -7,15 +7,11 @@ import {
   Modal,
   Alert,
   FlatList,
-  StyleSheet,
-  StatusBar,
   TouchableOpacity,
 } from "react-native";
-import * as SecureStore from "expo-secure-store";
 import { AccountContext } from "./AccountContext";
 import socket from "../socket";
 import { globalStyles } from "../styles/global";
-import MyGroupsScreen from "./Groups/MyGroupsScreen";
 
 export default function HomeScreen({ navigation }) {
   const { user, setUser } = React.useContext(AccountContext);
@@ -57,7 +53,7 @@ export default function HomeScreen({ navigation }) {
   const Item = ({ title, id }) => (
     <View style={globalStyles.item}>
       <TouchableOpacity
-        style={globalStyles.button}
+        style={globalStyles.primaryButton}
         onPress={() => {
           setUser({ ...user, currentGroup: id, groupName: title }),
             navigation.navigate("ChatScreen");
@@ -65,6 +61,8 @@ export default function HomeScreen({ navigation }) {
       >
         <Text>{title}</Text>
       </TouchableOpacity>
+      <Text>Insert latest messages here?</Text>
+      <Text>Notifications?</Text>
     </View>
   );
 
@@ -75,15 +73,11 @@ export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView style={globalStyles.container}>
       <View style={globalStyles.topRightButton}>
-        {/* <Button
-          title={myUsername}
-          onPress={() => navigation.navigate("Settings")}
-        /> */}
         <TouchableOpacity
-          style={globalStyles.button}
+          style={globalStyles.secondaryButton}
           onPress={() => navigation.navigate("Settings")}
         >
-          <Text>{myUsername}</Text>
+          <Text style={globalStyles.secondaryButtonText}>{myUsername}</Text>
         </TouchableOpacity>
       </View>
       <Text style={globalStyles.headerText}>My groups</Text>
@@ -139,14 +133,15 @@ export default function HomeScreen({ navigation }) {
           </View>
         </Modal>
         <View style={{ marginVertical: 40 }}>
-          <View style={globalStyles.primaryButton}>
-            <Button
-              color="white"
-              title="New group"
+          <View>
+            <TouchableOpacity
+              style={globalStyles.primaryButton}
               onPress={() => {
                 setModalVisible(true);
               }}
-            />
+            >
+              <Text style={globalStyles.primaryButtonText}>New group</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

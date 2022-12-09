@@ -56,7 +56,7 @@ export default function ForgotPasswordScreen({ navigation }) {
           onPress={() => navigation.navigate("Settings")}
         />
       </View>
-      <View style={globalStyles.container}>
+      <View>
         <View>
           <Text>
             Click the button below to recieve a 6 digit passcode to the email

@@ -24,7 +24,7 @@ export default function DeleteAccountScreen({ navigation }) {
           onPress={() => navigation.navigate("Settings")}
         />
       </View>
-      <View style={globalStyles.container}>
+      <View>
         <Formik
           initialValues={{ passattempt: "" }}
           onSubmit={(values, actions) => {

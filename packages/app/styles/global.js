@@ -77,7 +77,7 @@ export const globalStyles = StyleSheet.create({
     alignSelf: "flex-end",
     position: "absolute",
     paddingRight: 10,
-    top: 70,
+    top: 57,
   },
   outlineButton: {
     alignItems: "center",
@@ -125,9 +125,9 @@ export const globalStyles = StyleSheet.create({
     top: -20,
   },
   item: {
-    backgroundColor: "#cdcdcd",
-    padding: 20,
-    marginVertical: 8,
+    backgroundColor: "transparent",
+    padding: 15,
+    marginVertical: 10,
     marginHorizontal: 16,
   },
   chatContainer: {

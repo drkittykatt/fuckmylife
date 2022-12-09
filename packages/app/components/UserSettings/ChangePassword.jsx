@@ -25,7 +25,7 @@ export default function ChangePasswordScreen({ navigation }) {
           onPress={() => navigation.navigate("Settings")}
         />
       </View>
-      <View style={globalStyles.container}>
+      <View>
         <Formik
           initialValues={{ password: "", passattempt1: "", passattempt2: "" }}
           validationSchema={newPasswordSchema}
