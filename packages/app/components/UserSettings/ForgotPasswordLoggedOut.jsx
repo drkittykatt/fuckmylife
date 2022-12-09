@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  Text,
-  View,
-  SafeAreaView,
-  StyleSheet,
-  Button,
-  TextInput,
-} from "react-native";
+import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import { AccountContext } from "../AccountContext";
 import { globalStyles } from "../../styles/global";
 const { forgotPasswordSchema } = require("@whatsapp-clone/common");
@@ -19,9 +12,26 @@ export default function ForgotPasswordLoggedOut({ navigation }) {
   return (
     <View style={globalStyles.container}>
       <View style={globalStyles.backButton}>
-        <Button title="< Login" onPress={() => navigation.navigate("Login")} />
+        <TouchableOpacity
+          style={globalStyles.secondaryButton}
+          onPress={() => navigation.navigate("Login")}
+        >
+          <Text style={globalStyles.secondaryButtonText}>{"< "} Login</Text>
+        </TouchableOpacity>
       </View>
-      <View style={{ marginTop: 10 }}></View>
+      <View style={{ marginTop: 110 }}></View>
+      <Text style={globalStyles.headerText}>Forgot password</Text>
+
+      <Text
+        style={{
+          color: "red",
+          textAlign: "center",
+          width: "80%",
+        }}
+      >
+        {error}
+      </Text>
+
       <View style={globalStyles.container2}>
         <Formik
           initialValues={{ email: "" }}
@@ -62,39 +72,31 @@ export default function ForgotPasswordLoggedOut({ navigation }) {
         >
           {(props) => (
             <View>
-              <Text style={globalStyles.headerText}>Forgot password</Text>
-              <View style={{ marginVertical: 5 }}></View>
-              <View style={{ marginHorizontal: 30 }}>
-                <Text
-                  style={{
-                    color: "red",
-                    textAlign: "center",
-                  }}
-                >
-                  {error}
-                </Text>
-                <View style={{ marginVertical: 10 }}></View>
+              <View style={{ marginVertical: -35 }}></View>
 
-                <Text>Email</Text>
-                <TextInput
-                  style={globalStyles.input}
-                  placeholder="Enter Email"
-                  onChangeText={props.handleChange("email")}
-                  value={props.values.email}
-                  marginBottom={10}
-                />
-                <View style={globalStyles.primaryButton}>
-                  <Button
-                    color="white"
-                    title="Send passcode"
-                    onPress={props.handleSubmit}
-                  />
-                </View>
+              <Text>Email</Text>
+              <TextInput
+                style={globalStyles.input}
+                placeholder="Enter Email"
+                onChangeText={props.handleChange("email")}
+                value={props.values.email}
+                marginBottom={10}
+              />
+
+              <View>
+                <TouchableOpacity
+                  style={globalStyles.primaryButton}
+                  onPress={props.handleSubmit}
+                >
+                  <Text style={globalStyles.primaryButtonText}>
+                    Send passcode
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           )}
         </Formik>
-        <View style={{ marginVertical: 30 }}></View>
+        <View style={{ marginVertical: 20 }}></View>
         <Formik
           initialValues={{ passcode: "", passattempt1: "", passattempt2: "" }}
           validationSchema={forgotPasswordSchema}
@@ -165,12 +167,16 @@ export default function ForgotPasswordLoggedOut({ navigation }) {
               <Text>
                 <ErrorMessage name="passattempt2" />
               </Text>
-              <View style={globalStyles.primaryButton}>
-                <Button
-                  color="white"
-                  title="Reset password"
+
+              <View>
+                <TouchableOpacity
+                  style={globalStyles.primaryButton}
                   onPress={props.handleSubmit}
-                />
+                >
+                  <Text style={globalStyles.primaryButtonText}>
+                    Reset password
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           )}

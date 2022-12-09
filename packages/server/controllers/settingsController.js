@@ -132,8 +132,7 @@ module.exports.handleGeneratePasscode = async (req, res) => {
       if (info.messageId != null) {
         res.json({
           ...req.body,
-          status:
-            "email with passcode successfully sent. Please check your email & you may need to check the spam folders if you don't see the email.",
+          status: "Passcode sent to email. May need to check spam folder.",
         });
       }
     } else {
@@ -146,7 +145,7 @@ module.exports.handleGeneratePasscode = async (req, res) => {
   } else {
     res.json({
       ...req.body,
-      status: "We don't have that email associated with any users.",
+      status: "User with this email does not exist.",
     });
   }
 };
@@ -178,9 +177,9 @@ module.exports.handleForgotPassword = async (req, res) => {
         });
       }
     } else {
-      res.json({ ...req.body, status: "Passcode is incorrect" });
+      res.json({ ...req.body, status: "Passcode is incorrect." });
     }
   } else {
-    res.json({ ...req.body, status: "User with this email does not exist" });
+    res.json({ ...req.body, status: "User with this email does not exist." });
   }
 };

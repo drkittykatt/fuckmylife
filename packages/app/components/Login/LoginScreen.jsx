@@ -1,13 +1,5 @@
 import * as React from "react";
-import {
-  Button,
-  TextInput,
-  View,
-  Text,
-  StyleSheet,
-  Alert,
-  TouchableOpacity,
-} from "react-native";
+import { TextInput, View, Text, TouchableOpacity } from "react-native";
 import { Formik, ErrorMessage } from "formik";
 import { globalStyles } from "../../styles/global";
 const { formSchema } = require("@whatsapp-clone/common");

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, TextInput, View, Text, StyleSheet, Alert } from "react-native";
+import { Button, TextInput, View, Text, TouchableOpacity } from "react-native";
 import { Formik, ErrorMessage } from "formik";
 import { globalStyles } from "../../styles/global";
 const { formSignupSchema } = require("@whatsapp-clone/common");
@@ -12,7 +12,12 @@ export default function SignUpScreen({ navigation }) {
   return (
     <View style={globalStyles.container}>
       <View style={globalStyles.backButton}>
-        <Button title="< Home" onPress={() => navigation.navigate("Splash")} />
+        <TouchableOpacity
+          style={globalStyles.secondaryButton}
+          onPress={() => navigation.navigate("Splash")}
+        >
+          <Text style={globalStyles.secondaryButtonText}>{"< "} Home</Text>
+        </TouchableOpacity>
       </View>
       <View>
         <Formik
@@ -101,20 +106,27 @@ export default function SignUpScreen({ navigation }) {
                 <Text>
                   <ErrorMessage name="password" />
                 </Text>
-                <View style={globalStyles.fixToText}>
-                  <View style={globalStyles.secondaryButton}>
-                    <Button
-                      title="Log in"
+
+                <View style={globalStyles.buttonContainer}>
+                  <View>
+                    <TouchableOpacity
+                      style={globalStyles.secondaryButton}
                       onPress={() => navigation.navigate("Login")}
-                    />
+                    >
+                      <Text style={globalStyles.secondaryButtonText}>
+                        Log in
+                      </Text>
+                    </TouchableOpacity>
                   </View>
-                  <View style={{ marginHorizontal: 15 }}></View>
-                  <View style={globalStyles.primaryButton}>
-                    <Button
-                      title="Create account"
-                      color="#fdfdfd"
+                  <View>
+                    <TouchableOpacity
+                      style={globalStyles.primaryButton}
                       onPress={props.handleSubmit}
-                    />
+                    >
+                      <Text style={globalStyles.primaryButtonText}>
+                        Sign up
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>

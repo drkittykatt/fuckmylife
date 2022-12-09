@@ -130,7 +130,6 @@ export const globalStyles = StyleSheet.create({
     marginVertical: 8,
     marginHorizontal: 16,
   },
-
   chatContainer: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0 + 150,
@@ -153,15 +152,6 @@ export const globalStyles = StyleSheet.create({
     elevation: 3,
     backgroundColor: "#1aa7ec",
   },
-  primaryButton2: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 6,
-    elevation: 3,
-    backgroundColor: "#1aa7ec",
-  },
   primaryButtonText: {
     color: "#fdfdfd",
     fontSize: 18,
@@ -169,15 +159,6 @@ export const globalStyles = StyleSheet.create({
   secondaryButtonText: {
     color: "#228ee7",
     fontSize: 18,
-  },
-  primaryLoginButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 30,
-    borderRadius: 6,
-    elevation: 3,
-    backgroundColor: "#2A92C1",
   },
   secondaryButton: {
     alignItems: "center",
