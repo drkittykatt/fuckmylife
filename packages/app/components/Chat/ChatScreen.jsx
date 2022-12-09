@@ -68,50 +68,35 @@ export default function ChatScreen({ navigation }) {
 
   return (
     <View style={globalStyles.container}>
-      {/* <View //make this a header css thing
-        style={{
-          width: "90%",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <View>
-          <Button title="button 1" />
-        </View>
-
-        <View>
-          <Button title="button 1" />
-        </View>
-      </View> */}
-      <View style={globalStyles.backButton}>
+      <View style={{ marginTop: 50 }}></View>
+      <View style={globalStyles.header}>
         <TouchableOpacity
-          style={globalStyles.button}
+          style={globalStyles.smallButton}
           onPress={() => navigation.navigate("Home")}
         >
-          <Text>{"<"} Groups</Text>
+          <Text style={globalStyles.smallButtonText}>{"  <  "}</Text>
         </TouchableOpacity>
-      </View>
-      <View style={globalStyles.topRightButton}>
-        <Button
-          title="Me"
-          onPress={() => Alert.alert("add user/admin dashboard here")}
-        />
-      </View>
-
-      <View style={globalStyles.topView}>
-        <View style={{ marginVertical: 50 }}></View>
 
         <TouchableOpacity
-          style={globalStyles.button}
+          style={globalStyles.primaryButton}
           onPress={() => Alert.alert("go to Chat Info screen")}
         >
-          <Text>{groupTitleButton}</Text>
+          <Text style={globalStyles.primaryButtonText}>{groupTitleButton}</Text>
         </TouchableOpacity>
 
-        <View style={globalStyles.fixToText}>
-          <Button title="Chats" />
-          <Button title="Posts" onPress={() => Alert.alert("add posts here")} />
-        </View>
+        <TouchableOpacity
+          style={globalStyles.smallButton}
+          onPress={() => Alert.alert("add user/admin dashboard here")}
+        >
+          <Text style={globalStyles.smallButtonText}>
+            {"  "}Me{"  "}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={globalStyles.fixToText}>
+        <Button title="Chats" />
+        <Button title="Posts" onPress={() => Alert.alert("add posts here")} />
       </View>
       <View style={globalStyles.chatContainer}>
         <FlatList

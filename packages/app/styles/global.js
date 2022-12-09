@@ -18,6 +18,20 @@ export const globalStyles = StyleSheet.create({
     marginRight: 25,
     textAlign: "center",
   },
+  groupHeaderText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#333",
+    padding: 10,
+    marginHorizontal: 25,
+    textAlign: "center",
+  },
+  header: {
+    paddingTop: 10,
+    width: "90%",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
   defaultText: {
     fontSize: 18,
     fontWeight: "normal",
@@ -46,8 +60,9 @@ export const globalStyles = StyleSheet.create({
   },
   innerContainer: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-    marginBottom: 150,
+    marginTop: StatusBar.currentHeight || 15,
+    marginBottom: 10,
+    width: "100%",
   },
   input: {
     borderWidth: 1,
@@ -132,7 +147,7 @@ export const globalStyles = StyleSheet.create({
   },
   chatContainer: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0 + 150,
+    marginTop: StatusBar.currentHeight || 0 + 30,
     marginBottom: 200,
     alignSelf: "flex-beginning",
     marginLeft: 25,
@@ -172,5 +187,19 @@ export const globalStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     paddingHorizontal: 20,
+  },
+  smallButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 6,
+  },
+  smallButtonText: {
+    color: "#228ee7",
+    fontSize: 14,
   },
 });

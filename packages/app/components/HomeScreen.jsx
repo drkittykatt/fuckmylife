@@ -72,15 +72,26 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={globalStyles.container}>
-      <View style={globalStyles.topRightButton}>
+      <View style={globalStyles.header}>
         <TouchableOpacity
-          style={globalStyles.secondaryButton}
+          style={globalStyles.smallButton}
           onPress={() => navigation.navigate("Settings")}
         >
-          <Text style={globalStyles.secondaryButtonText}>{myUsername}</Text>
+          <Text style={globalStyles.smallButtonText}>{myUsername}</Text>
+        </TouchableOpacity>
+        <Text style={globalStyles.groupHeaderText}>My groups</Text>
+        <TouchableOpacity
+          style={globalStyles.smallButton}
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
+          <Text style={globalStyles.smallButtonText}>
+            {"  "}New{"  "}
+          </Text>
         </TouchableOpacity>
       </View>
-      <Text style={globalStyles.headerText}>My groups</Text>
+
       <View style={globalStyles.innerContainer}>
         <FlatList
           data={groups}
@@ -132,18 +143,6 @@ export default function HomeScreen({ navigation }) {
             </View>
           </View>
         </Modal>
-        <View style={{ marginVertical: 40 }}>
-          <View>
-            <TouchableOpacity
-              style={globalStyles.primaryButton}
-              onPress={() => {
-                setModalVisible(true);
-              }}
-            >
-              <Text style={globalStyles.primaryButtonText}>New group</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
       </View>
     </SafeAreaView>
   );
