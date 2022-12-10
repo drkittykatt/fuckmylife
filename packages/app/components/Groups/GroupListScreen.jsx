@@ -34,9 +34,9 @@ export default function GroupListScreen({ navigation }) {
       <View style={globalStyles.backButton}>
         <Button title="< Home" onPress={() => navigation.navigate("Home")} />
       </View>
-      <View style={globalStyles.container}>
+      <View>
         <Text>{error}</Text>
-        <Text>
+        <Text style={{ paddingHorizontal: 50 }}>
           These are the names of all the groups (make sure they're public and
           allow people to request to join lol):
         </Text>

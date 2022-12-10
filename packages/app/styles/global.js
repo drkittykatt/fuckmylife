@@ -148,9 +148,10 @@ export const globalStyles = StyleSheet.create({
   chatContainer: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0 + 30,
-    marginBottom: 200,
+    marginBottom: 120,
     alignSelf: "flex-beginning",
     marginLeft: 25,
+    width: "90%",
   },
   button: {
     alignItems: "center",
@@ -196,6 +197,14 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: "transparent",
     borderWidth: 1,
     borderColor: "#ddd",
+    borderRadius: 6,
+  },
+  sendButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    backgroundColor: "#1aa7ec",
     borderRadius: 6,
   },
   smallButtonText: {

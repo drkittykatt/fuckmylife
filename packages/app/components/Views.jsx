@@ -26,6 +26,7 @@ import JoinGroupScreen from "./Groups/JoinGroupScreen";
 import GroupListScreen from "./Groups/GroupListScreen";
 import MyGroupsScreen from "./Groups/MyGroupsScreen";
 import ChatScreen from "./Chat/ChatScreen";
+import PostScreen from "./Chat/PostScreen";
 
 import SplashScreen from "./SplashScreen";
 
@@ -66,6 +67,7 @@ function HomeStack() {
       <StackHome.Screen name="ViewAllGroups" component={GroupListScreen} />
       <StackHome.Screen name="ViewMyGroups" component={MyGroupsScreen} />
       <StackHome.Screen name="ChatScreen" component={ChatScreen} />
+      <StackHome.Screen name="PostScreen" component={PostScreen} />
 
       <StackHome.Screen name="Settings" component={SettingsScreen} />
       <StackHome.Screen
