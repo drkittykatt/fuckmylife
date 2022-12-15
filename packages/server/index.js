@@ -38,6 +38,26 @@ io.on("connection", (socket) => {
     );
   });
 
+  socket.on("insert comment return updated list", (req) => {
+    console.log("the routing to the backend sockets is working");
+    console.log(req);
+    console.log(req.post_id);
+    const firstQuery = pool.query(
+      "INSERT INTO post_comments(comment_text, sender_id, post_id) values($1,$2,$3) RETURNING id",
+      [req.mycomment, req.userId, req.currentPost]
+    );
+
+    pool.query(
+      "SELECT username sender_username, post_comments.id post_comment_id, sender_id, comment_text FROM post_comments INNER JOIN users ON post_comments.sender_id = users.id WHERE post_id = $1 ORDER BY post_comments.created_at DESC;",
+      [req.currentPost],
+      (err, res) => {
+        console.log(res.rows);
+        if (err) throw err;
+        io.emit("insert comment return updated list", res.rows);
+      }
+    );
+  });
+
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });

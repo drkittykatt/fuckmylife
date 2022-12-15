@@ -82,3 +82,24 @@ module.exports.handleGetPosts = async (req, res) => {
   );
   res.send(getPostsQuery.rows); // if this is null, check for that & display a message saying no posts
 };
+
+module.exports.handleCreateComment = async (req, res) => {
+  const newPostQuery = await pool.query(
+    "INSERT INTO post_comments(comment_text, sender_id, post_id) values($1,$2,$3) RETURNING id",
+    [req.body.mycomment, req.body.userId, req.params.post_id]
+  );
+
+  res.json({
+    ...req.body,
+    status: "Comment successfully created",
+  });
+};
+
+module.exports.handleGetPostComments = async (req, res) => {
+  const getPostCommentsQuery = await pool.query(
+    // "SELECT id post_comment_id, sender_id, comment_text FROM post_comments WHERE post_id = $1 ORDER BY created_at ASC;",
+    "SELECT username sender_username, post_comments.id post_comment_id, sender_id, comment_text FROM post_comments INNER JOIN users ON post_comments.sender_id = users.id WHERE post_id = $1 ORDER BY post_comments.created_at DESC;",
+    [req.params.post_id]
+  );
+  res.send(getPostCommentsQuery.rows); // if this is null, check for that & display a message saying no posts
+};

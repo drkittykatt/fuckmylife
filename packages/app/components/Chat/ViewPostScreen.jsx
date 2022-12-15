@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  Button,
   TextInput,
   View,
   Text,
@@ -17,9 +16,54 @@ import socket from "../../socket";
 export default function ViewPostScreen({ navigation }) {
   const { user, setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
-  //const [chats, setChats] = React.useState([]);
+  const [comments, setComments] = React.useState([]);
 
   const groupTitleButton = user.groupName;
+
+  const getComments = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/groups/${user.currentGroup}/posts/${user.currentPost}/getcomments`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...user }),
+        }
+      );
+      const jsonData = await response.json();
+
+      setComments(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  React.useEffect(() => {
+    getComments();
+    console.log("this is doing something");
+  }, []);
+
+  React.useEffect(() => {
+    socket.on("insert comment return updated list", (jsonData) => {
+      setComments(jsonData);
+      getComments();
+    });
+  }, [socket]);
+
+  const Item = ({ text, username }) => (
+    <View style={globalStyles.item}>
+      <Text>
+        Comment: {text} ~{username}
+      </Text>
+    </View>
+  );
+
+  const renderItem = ({ item }) => (
+    <Item text={item.comment_text} username={item.sender_username} />
+  );
 
   return (
     <View style={globalStyles.container}>
@@ -59,8 +103,16 @@ export default function ViewPostScreen({ navigation }) {
 
           <View style={{ marginTop: 50 }}></View>
           <Text>comments: </Text>
+
+          <FlatList
+            data={comments}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.post_comment_id}
+            inverted
+          />
         </View>
       </View>
+
       <View style={globalStyles.bottomView}>
         <Formik
           initialValues={{ mycomment: "" }}
@@ -69,21 +121,26 @@ export default function ViewPostScreen({ navigation }) {
           // add validation to make sure the message isn't null
           onSubmit={(values, actions) => {
             const vals = { ...values };
-            console.log("user submitted this message: " + vals.mycomment);
+            console.log({ ...user, ...vals });
+            const uservals = { ...user, ...values };
+            console.log("user submitted this comment: " + vals.mycomment);
+            actions.resetForm();
+            socket.emit("insert comment return updated list", uservals);
+            // router.post("/:group_id/posts/:post_id/createcomment", handleCreateComment);
           }}
         >
           {(props) => (
             <View>
               <Text>{error}</Text>
               <Text style={{ textAlign: "center" }}>
-                <ErrorMessage name="mypost" />
+                <ErrorMessage name="mycomment" />
               </Text>
               <View style={globalStyles.buttonContainer}>
                 <TextInput
                   style={globalStyles.input}
-                  placeholder="Send message..."
-                  onChangeText={props.handleChange("mypost")}
-                  value={props.values.mymessage}
+                  placeholder="Add comment..."
+                  onChangeText={props.handleChange("mycomment")}
+                  value={props.values.mycomment}
                   marginBottom={10}
                 />
                 <TouchableOpacity

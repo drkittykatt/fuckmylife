@@ -48,3 +48,14 @@ CREATE TABLE posts(
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+CREATE TABLE post_comments(
+    id SERIAL PRIMARY KEY,
+    sender_id INTEGER REFERENCES users(id),
+    post_id INTEGER REFERENCES posts(id),
+    comment_text VARCHAR NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+DROP TABLE post_comments;

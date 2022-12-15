@@ -10,6 +10,8 @@ const {
   getMyGroups,
   handleCreatePost,
   handleGetPosts,
+  handleCreateComment,
+  handleGetPostComments,
 } = require("../controllers/groupController");
 
 router.post("/creategroup", handleCreateGroup);
@@ -18,5 +20,8 @@ router.post("/mygroups", getMyGroups);
 router.post("/joingroup", handleJoinGroup);
 router.post("/:group_id/createpost", handleCreatePost);
 router.post("/:group_id/posts", handleGetPosts);
+
+router.post("/:group_id/posts/:post_id/createcomment", handleCreateComment);
+router.post("/:group_id/posts/:post_id/getcomments", handleGetPostComments);
 
 module.exports = router;
