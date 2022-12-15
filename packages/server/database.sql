@@ -58,4 +58,11 @@ CREATE TABLE post_comments(
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
-DROP TABLE post_comments;
+CREATE TABLE chat_replies(
+    id SERIAL PRIMARY KEY,
+    sender_id INTEGER REFERENCES users(id),
+    parent_chat_id INTEGER REFERENCES messages(id),
+    reply_text VARCHAR NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
