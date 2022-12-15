@@ -51,9 +51,13 @@ export default function PostScreen({ navigation }) {
       <TouchableOpacity
         style={globalStyles.primaryButton}
         onPress={() => {
-          // setUser({ ...user, currentGroup: id, groupName: title }),
-          //   navigation.navigate("ChatScreen");
-          Alert.alert("go to post with id: " + id);
+          setUser({
+            ...user,
+            currentPost: id,
+            post_title: title,
+            post_body: body,
+          }),
+            navigation.navigate("ViewPost");
         }}
       >
         <Text>{title}</Text>

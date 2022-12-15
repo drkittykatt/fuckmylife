@@ -110,20 +110,22 @@ export default function ChatScreen({ navigation }) {
           // add validation to make sure the message isn't null
           onSubmit={(values, actions) => {
             const vals = { ...values };
-            console.log("user submitted this message: " + vals.mymessage);
+            const uservals = { ...user, ...values };
+            actions.resetForm();
+            socket.emit("insert msg return updated list", uservals);
           }}
         >
           {(props) => (
             <View>
               <Text>{error}</Text>
               <Text style={{ textAlign: "center" }}>
-                <ErrorMessage name="mypost" />
+                <ErrorMessage name="mymessage" />
               </Text>
               <View style={globalStyles.buttonContainer}>
                 <TextInput
                   style={globalStyles.input}
                   placeholder="Send message..."
-                  onChangeText={props.handleChange("mypost")}
+                  onChangeText={props.handleChange("mymessage")}
                   value={props.values.mymessage}
                   marginBottom={10}
                 />

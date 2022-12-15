@@ -51,6 +51,21 @@ export const globalStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  postHeaderContainer: {
+    position: "absolute",
+    top: 50,
+    flex: 1,
+    backgroundColor: "#fdfdfd",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  postContainer: {
+    flex: 1,
+    backgroundColor: "#fdfdfd",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
   createPostContainer: {
     marginVertical: 150,
     flex: 1,
