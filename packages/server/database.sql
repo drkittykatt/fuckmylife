@@ -66,3 +66,7 @@ CREATE TABLE chat_replies(
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+DROP TABLE chat_replies;
+
+-- ! holding off on chat replies for now. maybe add similar reply structure for post comments

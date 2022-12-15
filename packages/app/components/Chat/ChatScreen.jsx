@@ -58,60 +58,9 @@ export default function ChatScreen({ navigation }) {
 
   const Item = ({ text, username, id }) => (
     <View style={globalStyles.item}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(false);
-        }}
-      >
-        <View style={globalStyles.centeredView}>
-          <View style={globalStyles.modalView}>
-            <Text style={{ textAlign: "center" }}>
-              Reply to: {user.reply_parent_text} ~{user.reply_parent_user}
-            </Text>
-            <View style={{ marginTop: 10 }}></View>
-            <TouchableOpacity
-              style={globalStyles.primaryButton}
-              onPress={() => {
-                setModalVisible(false);
-                Alert.alert("handle reply");
-              }}
-            >
-              <Text style={globalStyles.primaryButtonText}>Reply</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={globalStyles.secondaryButton}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={globalStyles.secondaryButtonText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-      <View style={globalStyles.header}>
-        <Text>
-          {text} ~{username}
-        </Text>
-        <TouchableOpacity
-          style={globalStyles.smallButton}
-          onPress={() => {
-            setUser({
-              ...user,
-              reply_parent_id: id,
-              reply_parent_text: text,
-              reply_parent_user: username,
-            }),
-              console.log({ ...user });
-            setModalVisible(true);
-          }}
-        >
-          <Text style={globalStyles.smallButtonText}>{"reply"}</Text>
-        </TouchableOpacity>
-      </View>
+      <Text>
+        {text} ~{username}
+      </Text>
     </View>
   );
 
