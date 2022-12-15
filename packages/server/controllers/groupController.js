@@ -62,3 +62,23 @@ module.exports.handleJoinGroup = async (req, res) => {
     });
   }
 };
+
+module.exports.handleCreatePost = async (req, res) => {
+  const newPostQuery = await pool.query(
+    "INSERT INTO posts(title, body_text, sender_id, group_id) values($1,$2,$3,$4) RETURNING id",
+    [req.body.title, req.body.body_text, req.body.userId, req.params.group_id]
+  );
+
+  res.json({
+    ...req.body,
+    status: "Post successfully created",
+  });
+};
+
+module.exports.handleGetPosts = async (req, res) => {
+  const getPostsQuery = await pool.query(
+    "SELECT id post_id, sender_id, title, body_text FROM posts WHERE group_id = $1 ORDER BY created_at ASC;",
+    [req.params.group_id]
+  );
+  res.send(getPostsQuery.rows); // if this is null, check for that & display a message saying no posts
+};

@@ -37,3 +37,14 @@ CREATE TABLE messages(
     created_at TIMESTAMP NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+
+CREATE TABLE posts(
+    id SERIAL PRIMARY KEY,
+    sender_id INTEGER REFERENCES users(id),
+    group_id INTEGER REFERENCES groups(id),
+    title VARCHAR NOT NULL,
+    body_text VARCHAR NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
