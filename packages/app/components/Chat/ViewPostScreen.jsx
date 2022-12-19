@@ -17,8 +17,30 @@ export default function ViewPostScreen({ navigation }) {
   const { user, setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
   const [comments, setComments] = React.useState([]);
+  const [postPoints, setPostPoints] = React.useState(0);
 
   const groupTitleButton = user.groupName;
+
+  const getPostPoints = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/groups/getpostpoints`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...user }),
+        }
+      );
+      const jsonData = await response.json();
+      console.log(jsonData);
+      setPostPoints(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
   const getComments = async () => {
     try {
@@ -34,7 +56,6 @@ export default function ViewPostScreen({ navigation }) {
         }
       );
       const jsonData = await response.json();
-
       setComments(jsonData);
     } catch (err) {
       console.error(err.message);
@@ -43,6 +64,7 @@ export default function ViewPostScreen({ navigation }) {
 
   React.useEffect(() => {
     getComments();
+    getPostPoints();
   }, []);
 
   React.useEffect(() => {
@@ -114,7 +136,7 @@ export default function ViewPostScreen({ navigation }) {
           <Text>{user.post_body}</Text>
 
           <View style={{ marginTop: 50 }}></View>
-          <Text>Points for this post: (insert here)</Text>
+          <Text>Points for this post: {postPoints}</Text>
           <TouchableOpacity
             style={globalStyles.sendButton}
             // onPress={props.handleSubmit}

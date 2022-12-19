@@ -112,13 +112,32 @@ module.exports.handleAddPostPoint = async (req, res) => {
 
   const recipient_id = getRecipientId.rows[0].sender_id;
 
-  // const newPostQuery = await pool.query(
-  //   "INSERT INTO points(comment_text, sender_id, post_id) values($1,$2,$3) RETURNING id",
-  //   [req.body.mycomment, req.body.userId, req.params.post_id]
-  // );
+  // add a conditional that checks to make sure the user hasn't already given this post a point before
+
+  const newPostPoint = await pool.query(
+    "INSERT INTO points(recipient_id, giver_id, posts_id) values($1,$2,$3);",
+    [recipient_id, req.body.userId, req.body.currentPost]
+  );
 
   res.json({
     ...req.body,
-    status: "got recipient id",
+    status: "added a point",
   });
+};
+
+module.exports.handleGetPostPoints = async (req, res) => {
+  const getPostPoints = await pool.query(
+    "SELECT SUM(point_value) FROM points WHERE posts_id = $1;",
+    [req.body.currentPost]
+  );
+
+  const postPoints = getPostPoints.rows[0].sum;
+
+  res.send(postPoints);
+
+  // res.json({
+  //   ...req.body,
+  //   thisPostPoints: postPoints,
+  //   status: "added a point",
+  // });
 };
