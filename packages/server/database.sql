@@ -70,3 +70,16 @@ CREATE TABLE chat_replies(
 DROP TABLE chat_replies;
 
 -- ! holding off on chat replies for now. maybe add similar reply structure for post comments
+
+CREATE TABLE points(
+    id SERIAL PRIMARY KEY,
+    giver_id INTEGER REFERENCES users(id),
+    recipient_id INTEGER REFERENCES users(id),
+    point_value INTEGER NOT NULL DEFAULT 1,
+    messages_id INTEGER REFERENCES messages(id),
+    posts_id INTEGER REFERENCES posts(id),
+    comment_id INTEGER REFERENCES post_comments(id),
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
+

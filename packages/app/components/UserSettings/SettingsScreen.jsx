@@ -77,6 +77,7 @@ export default function SettingsScreen({ navigation }) {
         <Text style={globalStyles.headerText}>Hi {myUsername}!</Text>
         <View style={globalStyles.innerContainer}>
           <View style={{ marginVertical: 20 }}></View>
+          <Text>You have (insert here) total points!</Text>
           <TouchableOpacity
             style={globalStyles.secondaryButton}
             onPress={() => {

@@ -43,7 +43,6 @@ export default function ViewPostScreen({ navigation }) {
 
   React.useEffect(() => {
     getComments();
-    console.log("this is doing something");
   }, []);
 
   React.useEffect(() => {
@@ -64,6 +63,19 @@ export default function ViewPostScreen({ navigation }) {
   const renderItem = ({ item }) => (
     <Item text={item.comment_text} username={item.sender_username} />
   );
+
+  const addPostPoint = () => {
+    console.log("adding a point");
+
+    fetch(`http://localhost:4000/groups/addpostpoint`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...user }),
+    });
+  };
 
   return (
     <View style={globalStyles.container}>
@@ -100,6 +112,20 @@ export default function ViewPostScreen({ navigation }) {
 
           <Text>Title: {user.post_title}</Text>
           <Text>{user.post_body}</Text>
+
+          <View style={{ marginTop: 50 }}></View>
+          <Text>Points for this post: (insert here)</Text>
+          <TouchableOpacity
+            style={globalStyles.sendButton}
+            // onPress={props.handleSubmit}
+            // onPress={() => Alert.alert("Add a point here")}
+            // onPress={() => console.log({ ...user })}
+            onPress={addPostPoint}
+          >
+            <Text style={globalStyles.primaryButtonText}>
+              Award Point to this Post
+            </Text>
+          </TouchableOpacity>
 
           <View style={{ marginTop: 50 }}></View>
           <Text>comments: </Text>

@@ -103,3 +103,22 @@ module.exports.handleGetPostComments = async (req, res) => {
   );
   res.send(getPostCommentsQuery.rows); // if this is null, check for that & display a message saying no posts
 };
+
+module.exports.handleAddPostPoint = async (req, res) => {
+  const getRecipientId = await pool.query(
+    "SELECT sender_id FROM posts WHERE id = $1;",
+    [req.body.currentPost]
+  );
+
+  const recipient_id = getRecipientId.rows[0].sender_id;
+
+  // const newPostQuery = await pool.query(
+  //   "INSERT INTO points(comment_text, sender_id, post_id) values($1,$2,$3) RETURNING id",
+  //   [req.body.mycomment, req.body.userId, req.params.post_id]
+  // );
+
+  res.json({
+    ...req.body,
+    status: "got recipient id",
+  });
+};
