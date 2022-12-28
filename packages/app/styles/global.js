@@ -136,12 +136,6 @@ export const globalStyles = StyleSheet.create({
     marginLeft: "2%",
     paddingTop: "8%",
   },
-  topRightButton: {
-    alignSelf: "flex-end",
-    position: "absolute",
-    paddingRight: 10,
-    top: 57,
-  },
   outlineButton: {
     alignItems: "center",
     justifyContent: "center",
