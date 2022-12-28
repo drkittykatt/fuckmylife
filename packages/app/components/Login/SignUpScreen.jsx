@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, TextInput, View, Text, TouchableOpacity } from "react-native";
+import { TextInput, View, Text, TouchableOpacity } from "react-native";
 import { Formik, ErrorMessage } from "formik";
 import { globalStyles } from "../../styles/global";
 const { formSignupSchema } = require("@whatsapp-clone/common");
@@ -9,6 +9,7 @@ import * as SecureStore from "expo-secure-store";
 export default function SignUpScreen({ navigation }) {
   const { setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
+
   return (
     <View style={globalStyles.container}>
       <View style={globalStyles.backButton}>
@@ -19,9 +20,14 @@ export default function SignUpScreen({ navigation }) {
           <Text style={globalStyles.secondaryButtonText}>{"< "} Home</Text>
         </TouchableOpacity>
       </View>
-      <View>
+      <View style={globalStyles.innerContainer}>
         <Formik
-          initialValues={{ email: "", username: "", password: "" }}
+          initialValues={{
+            email: "",
+            username: "",
+            password: "",
+            password2: "",
+          }}
           validationSchema={formSignupSchema}
           onSubmit={(values, actions) => {
             const vals = { ...values };
@@ -51,7 +57,6 @@ export default function SignUpScreen({ navigation }) {
                 if (data.status) {
                   setError(data.status);
                 } else if (data.loggedIn) {
-                  // navigate("/home");
                   SecureStore.setItemAsync("token", data.token);
                 }
               });
@@ -59,7 +64,6 @@ export default function SignUpScreen({ navigation }) {
         >
           {(props) => (
             <View>
-              <View style={{ marginVertical: -50 }}></View>
               <Text style={globalStyles.headerText}>Sign up</Text>
               <View style={{ marginVertical: 5 }}></View>
               <View style={{ marginHorizontal: 30 }}>
@@ -83,7 +87,7 @@ export default function SignUpScreen({ navigation }) {
                 <Text>
                   <ErrorMessage name="email" />
                 </Text>
-                <Text>Username</Text>
+                <Text>Username (you can change this later)</Text>
                 <TextInput
                   style={globalStyles.input}
                   placeholder="Enter username"
@@ -105,6 +109,19 @@ export default function SignUpScreen({ navigation }) {
                 />
                 <Text>
                   <ErrorMessage name="password" />
+                </Text>
+
+                <Text>Password</Text>
+                <TextInput
+                  style={globalStyles.input}
+                  placeholder="Repeat Password"
+                  onChangeText={props.handleChange("password2")}
+                  value={props.values.password2}
+                  secureTextEntry={true}
+                  marginBottom={10}
+                />
+                <Text>
+                  <ErrorMessage name="password2" />
                 </Text>
 
                 <View style={globalStyles.buttonContainer}>

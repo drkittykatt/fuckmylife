@@ -17,6 +17,8 @@ export const globalStyles = StyleSheet.create({
     marginLeft: 25,
     marginRight: 25,
     textAlign: "center",
+    borderColor: "green",
+    borderWidth: 5,
   },
   groupHeaderText: {
     fontSize: 24,
@@ -50,6 +52,8 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: "#fdfdfd",
     alignItems: "center",
     justifyContent: "center",
+    borderColor: "red",
+    borderWidth: 5,
   },
   postHeaderContainer: {
     position: "absolute",
@@ -93,7 +97,9 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
     marginTop: StatusBar.currentHeight || 15,
     marginBottom: 10,
-    width: "100%",
+    borderColor: "blue",
+    borderWidth: 5,
+    alignItems: "center",
   },
   input: {
     borderWidth: 1,
@@ -127,9 +133,8 @@ export const globalStyles = StyleSheet.create({
   },
   backButton: {
     alignSelf: "flex-beginning",
-    marginLeft: 15,
-    position: "absolute",
-    top: 70,
+    marginLeft: "2%",
+    paddingTop: "8%",
   },
   topRightButton: {
     alignSelf: "flex-end",
@@ -225,6 +230,8 @@ export const globalStyles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 20,
     backgroundColor: "transparent",
+    borderColor: "purple",
+    borderWidth: 5,
   },
   buttonContainer: {
     width: "90%",

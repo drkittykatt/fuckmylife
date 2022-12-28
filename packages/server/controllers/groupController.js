@@ -142,7 +142,11 @@ module.exports.handleGetUserPoints = async (req, res) => {
     [req.body.userId]
   );
 
-  const userPoints = getUserPoints.rows[0].sum;
+  if (getUserPoints.rows[0].sum == null) {
+    userPoints = "0";
+  } else {
+    userPoints = getUserPoints.rows[0].sum;
+  }
 
   res.send(userPoints);
 };

@@ -17,7 +17,7 @@ export default function SettingsScreen({ navigation }) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const { user, setUser } = React.useContext(AccountContext);
   const myUsername = user.username;
-  const [userPoints, setUserPoints] = React.useState(null);
+  const [userPoints, setUserPoints] = React.useState(0);
 
   const getUserPoints = async () => {
     try {
@@ -99,10 +99,10 @@ export default function SettingsScreen({ navigation }) {
             </View>
           </View>
         </Modal>
-        <View style={{ marginVertical: 40 }}></View>
-        <Text style={globalStyles.headerText}>Hi {myUsername}!</Text>
+        {/* <View style={{ marginVertical: 40 }}></View> */}
         <View style={globalStyles.innerContainer}>
-          <View style={{ marginVertical: 20 }}></View>
+          <Text style={globalStyles.headerText}>Hi {myUsername}!</Text>
+          {/* <View style={{ marginVertical: 20 }}></View> */}
           <Text>You have {userPoints} total points!</Text>
           <TouchableOpacity
             style={globalStyles.secondaryButton}
@@ -122,7 +122,6 @@ export default function SettingsScreen({ navigation }) {
               Change username
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             style={globalStyles.secondaryButton}
             onPress={() => {
@@ -133,7 +132,6 @@ export default function SettingsScreen({ navigation }) {
               Change password
             </Text>
           </TouchableOpacity>
-
           <TouchableOpacity
             style={globalStyles.secondaryButton}
             onPress={() => {
