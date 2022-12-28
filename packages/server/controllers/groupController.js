@@ -134,10 +134,15 @@ module.exports.handleGetPostPoints = async (req, res) => {
   const postPoints = getPostPoints.rows[0].sum;
 
   res.send(postPoints);
+};
 
-  // res.json({
-  //   ...req.body,
-  //   thisPostPoints: postPoints,
-  //   status: "added a point",
-  // });
+module.exports.handleGetUserPoints = async (req, res) => {
+  const getUserPoints = await pool.query(
+    "SELECT SUM(point_value) FROM points WHERE recipient_id = $1;",
+    [req.body.userId]
+  );
+
+  const userPoints = getUserPoints.rows[0].sum;
+
+  res.send(userPoints);
 };

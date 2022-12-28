@@ -131,10 +131,8 @@ export default function ViewPostScreen({ navigation }) {
             Add post (with id: {user.currentPost} )here and then comments below,
             and an add comment input
           </Text>
-
           <Text>Title: {user.post_title}</Text>
           <Text>{user.post_body}</Text>
-
           <View style={{ marginTop: 50 }}></View>
           <Text>Points for this post: {postPoints}</Text>
           <TouchableOpacity
@@ -148,17 +146,16 @@ export default function ViewPostScreen({ navigation }) {
               Award Point to this Post
             </Text>
           </TouchableOpacity>
-
-          <View style={{ marginTop: 50 }}></View>
-          <Text>comments: </Text>
-
-          <FlatList
-            data={comments}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.post_comment_id}
-            inverted
-          />
+          <Text>comment: </Text>
         </View>
+      </View>
+      <View style={globalStyles.commentContainer}>
+        <FlatList
+          data={comments}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.post_comment_id}
+          inverted
+        />
       </View>
 
       <View style={globalStyles.bottomView}>

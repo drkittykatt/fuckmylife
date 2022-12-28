@@ -58,6 +58,8 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: "#fdfdfd",
     alignItems: "center",
     justifyContent: "center",
+    borderColor: "blue",
+    borderWidth: 5,
   },
   postContainer: {
     flex: 1,
@@ -65,6 +67,13 @@ export const globalStyles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
+    marginTop: 0,
+  },
+  commentContainer: {
+    borderColor: "red",
+    borderWidth: 5,
+    marginTop: 500,
+    marginBottom: 100,
   },
   createPostContainer: {
     marginVertical: 150,

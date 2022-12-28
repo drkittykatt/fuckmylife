@@ -17,6 +17,32 @@ export default function SettingsScreen({ navigation }) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const { user, setUser } = React.useContext(AccountContext);
   const myUsername = user.username;
+  const [userPoints, setUserPoints] = React.useState(null);
+
+  const getUserPoints = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/groups/getuserpoints`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...user }),
+        }
+      );
+      const jsonData = await response.json();
+      console.log(jsonData);
+      setUserPoints(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  React.useEffect(() => {
+    getUserPoints();
+  }, []);
 
   const signOut = () => {
     SecureStore.deleteItemAsync("userToken");
@@ -77,7 +103,7 @@ export default function SettingsScreen({ navigation }) {
         <Text style={globalStyles.headerText}>Hi {myUsername}!</Text>
         <View style={globalStyles.innerContainer}>
           <View style={{ marginVertical: 20 }}></View>
-          <Text>You have (insert here) total points!</Text>
+          <Text>You have {userPoints} total points!</Text>
           <TouchableOpacity
             style={globalStyles.secondaryButton}
             onPress={() => {

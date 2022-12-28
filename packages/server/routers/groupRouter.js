@@ -14,6 +14,7 @@ const {
   handleGetPostComments,
   handleAddPostPoint,
   handleGetPostPoints,
+  handleGetUserPoints,
 } = require("../controllers/groupController");
 
 router.post("/creategroup", handleCreateGroup);
@@ -28,5 +29,6 @@ router.post("/:group_id/posts/:post_id/getcomments", handleGetPostComments);
 
 router.post("/addpostpoint", handleAddPostPoint);
 router.post("/getpostpoints", handleGetPostPoints);
+router.post("/getuserpoints", handleGetUserPoints);
 
 module.exports = router;
