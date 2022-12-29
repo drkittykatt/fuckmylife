@@ -36,7 +36,7 @@ module.exports.handleLogin = async (req, res) => {
 
 module.exports.attemptLogin = async (req, res) => {
   const potentialLogin = await pool.query(
-    "SELECT id, username, passhash FROM users u WHERE u.username=$1",
+    "SELECT id, username, passhash FROM users u WHERE u.username=$1 OR LOWER(u.email)=LOWER($1)",
     [req.body.username]
   );
 
@@ -48,7 +48,8 @@ module.exports.attemptLogin = async (req, res) => {
     if (isSamePass) {
       jwtSign(
         {
-          username: req.body.username,
+          //username: req.body.username,
+          username: potentialLogin.rows[0].username,
           id: potentialLogin.rows[0].id,
         },
         process.env.JWT_SECRET,
@@ -59,7 +60,8 @@ module.exports.attemptLogin = async (req, res) => {
             loggedIn: true,
             token,
             userId: potentialLogin.rows[0].id,
-            username: req.body.username,
+            username: potentialLogin.rows[0].username,
+            // username: req.body.username,
           }); //added this
           console.log("logged in");
         })
@@ -71,12 +73,15 @@ module.exports.attemptLogin = async (req, res) => {
           });
         });
     } else {
-      res.json({ loggedIn: false, status: "Wrong username or password!" });
+      res.json({
+        loggedIn: false,
+        status: "Wrong username, email or password!",
+      });
       console.log("wrong password");
     }
   } else {
     console.log("not good");
-    res.json({ loggedIn: false, status: "Wrong username or password!" });
+    res.json({ loggedIn: false, status: "Wrong username, email or password!" });
   }
 };
 
@@ -98,6 +103,10 @@ module.exports.attemptRegister = async (req, res) => {
       const newUserQuery = await pool.query(
         "INSERT INTO users(email, username, passhash) values($1,$2,$3) RETURNING id, username",
         [req.body.email, req.body.username, hashedPass]
+      );
+      const joinNuubiGroupQuery = await pool.query(
+        "INSERT INTO participants(user_id, group_id, is_admin) values ($1, 7, false) RETURNING id, user_id, group_id",
+        [newUserQuery.rows[0].id]
       );
       jwtSign(
         {

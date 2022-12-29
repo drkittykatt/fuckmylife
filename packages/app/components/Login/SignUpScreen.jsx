@@ -101,7 +101,7 @@ export default function SignUpScreen({ navigation }) {
                 <Text>Password</Text>
                 <TextInput
                   style={globalStyles.input}
-                  placeholder="Enter Password"
+                  placeholder="Enter password"
                   onChangeText={props.handleChange("password")}
                   value={props.values.password}
                   secureTextEntry={true}
@@ -114,7 +114,7 @@ export default function SignUpScreen({ navigation }) {
                 <Text>Password</Text>
                 <TextInput
                   style={globalStyles.input}
-                  placeholder="Repeat Password"
+                  placeholder="Repeat password"
                   onChangeText={props.handleChange("password2")}
                   value={props.values.password2}
                   secureTextEntry={true}

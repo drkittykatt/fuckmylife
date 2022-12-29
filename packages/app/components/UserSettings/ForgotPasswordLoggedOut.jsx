@@ -77,7 +77,7 @@ export default function ForgotPasswordLoggedOut({ navigation }) {
                 <Text>Email</Text>
                 <TextInput
                   style={globalStyles.input}
-                  placeholder="Enter Email"
+                  placeholder="Enter email"
                   onChangeText={props.handleChange("email")}
                   value={props.values.email}
                   marginBottom={10}

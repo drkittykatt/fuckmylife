@@ -71,10 +71,10 @@ export default function LoginScreen({ navigation }) {
                   {error}
                 </Text>
                 <View style={{ marginVertical: 10 }}></View>
-                <Text>Username</Text>
+                <Text>Username or email</Text>
                 <TextInput
                   style={globalStyles.input}
-                  placeholder="Enter username"
+                  placeholder="Enter username or email"
                   onChangeText={props.handleChange("username")}
                   value={props.values.username}
                   marginBottom={10}
@@ -85,7 +85,7 @@ export default function LoginScreen({ navigation }) {
                 <Text>Password</Text>
                 <TextInput
                   style={globalStyles.input}
-                  placeholder="Enter Password"
+                  placeholder="Enter password"
                   onChangeText={props.handleChange("password")}
                   value={props.values.password}
                   secureTextEntry={true}

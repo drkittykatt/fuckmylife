@@ -33,7 +33,6 @@ export default function SettingsScreen({ navigation }) {
         }
       );
       const jsonData = await response.json();
-      console.log(jsonData);
       setUserPoints(jsonData);
     } catch (err) {
       console.error(err.message);
