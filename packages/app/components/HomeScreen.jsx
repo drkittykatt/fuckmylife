@@ -51,7 +51,7 @@ export default function HomeScreen({ navigation }) {
   }, []);
 
   const Item = ({ title, description, id }) => (
-    <View style={globalStyles.item}>
+    <View style={globalStyles.joinedGroupItem}>
       <TouchableOpacity
         style={globalStyles.joinedGroupButton}
         onPress={() => {

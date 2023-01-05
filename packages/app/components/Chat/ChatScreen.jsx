@@ -57,7 +57,7 @@ export default function ChatScreen({ navigation }) {
   const groupTitleButton = user.groupName;
 
   const Item = ({ text, username, id }) => (
-    <View style={globalStyles.item}>
+    <View style={globalStyles.chatItem}>
       <Text>
         {text} ~{username}
       </Text>
