@@ -12,6 +12,7 @@ import { Formik, ErrorMessage } from "formik";
 import { globalStyles } from "../../styles/global";
 import { AccountContext } from "../AccountContext";
 import * as SecureStore from "expo-secure-store";
+import { RadioButton } from "react-native-paper";
 
 export default function CreateGroupScreen({ navigation }) {
   const { user, setUser } = React.useContext(AccountContext);
@@ -31,7 +32,11 @@ export default function CreateGroupScreen({ navigation }) {
       <View>
         <Text>Welcome to the create group</Text>
         <Formik
-          initialValues={{ groupname: "", description: "" }}
+          initialValues={{
+            groupname: "",
+            description: "",
+            visibility: "Private",
+          }}
           // add validation to make sure character limits are not exceeded for both entries
           onSubmit={(values, actions) => {
             const vals = { ...values };
@@ -91,6 +96,25 @@ export default function CreateGroupScreen({ navigation }) {
               {/* <Text>
               <ErrorMessage name="description" />
             </Text> */}
+              <Text>Visibility</Text>
+
+              <View>
+                <RadioButton.Group
+                  onValueChange={props.handleChange("visibility")}
+                  value={props.values.visibility}
+                  disabled="false"
+                >
+                  <View>
+                    <Text>Private</Text>
+                    <RadioButton value="Private"></RadioButton>
+                  </View>
+                  <View>
+                    <Text>Public</Text>
+                    <RadioButton value="Public"></RadioButton>
+                  </View>
+                </RadioButton.Group>
+              </View>
+
               <Button title="Create Group" onPress={props.handleSubmit} />
             </View>
           )}
