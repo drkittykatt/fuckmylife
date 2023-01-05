@@ -50,24 +50,42 @@ export default function HomeScreen({ navigation }) {
     getGroups();
   }, []);
 
-  const Item = ({ title, id }) => (
+  const Item = ({ title, description, id }) => (
     <View style={globalStyles.item}>
       <TouchableOpacity
-        style={globalStyles.primaryButton}
+        style={globalStyles.joinedGroupButton}
         onPress={() => {
           setUser({ ...user, currentGroup: id, groupName: title }),
             navigation.navigate("ChatScreen");
         }}
       >
-        <Text>{title}</Text>
+        <Text
+          style={{
+            fontSize: 18,
+            fontWeight: "bold",
+            color: "#333",
+          }}
+        >
+          {title}
+        </Text>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "normal",
+            color: "#333",
+          }}
+        >
+          {description}
+        </Text>
+        <Text style={{ paddingTop: 10, color: "#333" }}>
+          10 new notifications
+        </Text>
       </TouchableOpacity>
-      <Text>Insert latest messages here?</Text>
-      <Text>Notifications?</Text>
     </View>
   );
 
   const renderItem = ({ item }) => (
-    <Item title={item.name} id={item.group_id} />
+    <Item title={item.name} description={item.description} id={item.group_id} />
   );
 
   return (
@@ -92,7 +110,7 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      <View style={globalStyles.innerContainer}>
+      <View style={globalStyles.innerMyGroupsContainer}>
         <FlatList
           data={groups}
           renderItem={renderItem}

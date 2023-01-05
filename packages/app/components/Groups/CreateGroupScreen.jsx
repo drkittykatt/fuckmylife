@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Button, TextInput, View, Text, StyleSheet, Alert } from "react-native";
+import {
+  Button,
+  TextInput,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
 import { Formik, ErrorMessage } from "formik";
 import { globalStyles } from "../../styles/global";
 import { AccountContext } from "../AccountContext";
@@ -11,10 +19,15 @@ export default function CreateGroupScreen({ navigation }) {
 
   return (
     <View style={globalStyles.container}>
-      <View style={{ marginVertical: -5 }}></View>
       <View style={globalStyles.backButton}>
-        <Button title="< Home" onPress={() => navigation.navigate("Home")} />
+        <TouchableOpacity
+          style={globalStyles.secondaryButton}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Text style={globalStyles.secondaryButtonText}>{"< "} Home</Text>
+        </TouchableOpacity>
       </View>
+
       <View>
         <Text>Welcome to the create group</Text>
         <Formik
@@ -22,7 +35,6 @@ export default function CreateGroupScreen({ navigation }) {
           // add validation to make sure character limits are not exceeded for both entries
           onSubmit={(values, actions) => {
             const vals = { ...values };
-            console.log("submit button triggered");
             actions.resetForm();
             fetch("http://localhost:4000/groups/creategroup", {
               method: "POST",
