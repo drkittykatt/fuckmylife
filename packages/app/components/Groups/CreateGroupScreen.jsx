@@ -7,16 +7,26 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
+  Pressable,
 } from "react-native";
 import { Formik, ErrorMessage } from "formik";
 import { globalStyles } from "../../styles/global";
 import { AccountContext } from "../AccountContext";
 import * as SecureStore from "expo-secure-store";
-import { RadioButton } from "react-native-paper";
+//import { RadioButton } from "react-native-paper";
+import RadioButton from "./RadioButton";
 
 export default function CreateGroupScreen({ navigation }) {
   const { user, setUser } = React.useContext(AccountContext);
   const [error, setError] = React.useState(null);
+
+  const [option, setOption] = React.useState(null);
+
+  const data = [
+    { value: "Apple" },
+    { value: "Samsung" },
+    { value: "Blackberry" },
+  ];
 
   return (
     <View style={globalStyles.container}>
@@ -97,6 +107,36 @@ export default function CreateGroupScreen({ navigation }) {
               <ErrorMessage name="description" />
             </Text> */}
               <Text>Visibility</Text>
+              {/* 
+              <View style={globalStyles.buttonContainer}>
+                <View>
+                  <TouchableOpacity
+                    style={globalStyles.secondaryButton}
+                    //  onPress={() => navigation.navigate("SignUp")}
+                  >
+                    <Text style={globalStyles.secondaryButtonText}>
+                      Private
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <TouchableOpacity
+                    style={globalStyles.secondaryButton}
+                    // onPress={props.handleSubmit}
+                  >
+                    <Text style={globalStyles.secondaryButtonText}>Public</Text>
+                  </TouchableOpacity>
+                </View>
+              </View> */}
+
+              {/* <Pressable
+                style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1.0 }]}
+                onPress={() => console.log("Pressed")}
+              >
+                <View>
+                  <Text>Press Me</Text>
+                </View>
+              </Pressable>
 
               <View>
                 <RadioButton.Group
@@ -113,7 +153,13 @@ export default function CreateGroupScreen({ navigation }) {
                     <RadioButton value="Public"></RadioButton>
                   </View>
                 </RadioButton.Group>
-              </View>
+              </View> */}
+
+              <Text style={globalStyles.paragraph}>
+                Choose your favorite company:{" "}
+              </Text>
+              <RadioButton data={data} onSelect={(value) => setOption(value)} />
+              <Text> Your option: {option}</Text>
 
               <Button title="Create Group" onPress={props.handleSubmit} />
             </View>

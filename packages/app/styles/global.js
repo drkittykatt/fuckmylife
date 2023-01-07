@@ -283,4 +283,26 @@ export const globalStyles = StyleSheet.create({
     color: "#228ee7",
     fontSize: 14,
   },
+
+  option: {
+    fontSize: 20,
+    color: "white",
+    textAlign: "center",
+  },
+  unselected: {
+    backgroundColor: "red",
+    margin: 5,
+  },
+  selected: {
+    backgroundColor: "blue",
+    margin: 6,
+    padding: 10,
+    borderRadius: 10,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
 });
