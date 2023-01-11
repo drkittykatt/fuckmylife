@@ -141,7 +141,7 @@ export const globalStyles = StyleSheet.create({
   backButton: {
     alignSelf: "flex-beginning",
     marginLeft: 10,
-    paddingTop: 30,
+    paddingTop: 35,
   },
   outlineButton: {
     alignItems: "center",

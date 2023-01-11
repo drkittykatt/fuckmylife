@@ -83,3 +83,4 @@ CREATE TABLE points(
     updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
+alter table groups alter column description type varchar(800);

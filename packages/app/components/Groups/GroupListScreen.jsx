@@ -1,5 +1,13 @@
 import * as React from "react";
-import { Button, TextInput, View, Text, StyleSheet, Alert } from "react-native";
+import {
+  Button,
+  TextInput,
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import { Formik, ErrorMessage } from "formik";
 import { globalStyles } from "../../styles/global";
 const { formSchema } = require("@whatsapp-clone/common");
@@ -30,10 +38,15 @@ export default function GroupListScreen({ navigation }) {
 
   return (
     <View style={globalStyles.container}>
-      <View style={{ marginVertical: -5 }}></View>
       <View style={globalStyles.backButton}>
-        <Button title="< Home" onPress={() => navigation.navigate("Home")} />
+        <TouchableOpacity
+          style={globalStyles.secondaryButton}
+          onPress={() => navigation.navigate("Home")}
+        >
+          <Text style={globalStyles.secondaryButtonText}>{"< "} Home</Text>
+        </TouchableOpacity>
       </View>
+
       <View>
         <Text>{error}</Text>
         <Text style={{ paddingHorizontal: 50 }}>

@@ -58,10 +58,22 @@ const addMessageSchema = Yup.object({
     .min(1, "message too short!"),
 });
 
+const createGroupSchema = Yup.object({
+  groupname: Yup.string()
+    .required("Name is required")
+    .min(1, "name must be at least one character")
+    .max(28, "name cannot exceed 28 characters"),
+  description: Yup.string()
+    .required("Description is required")
+    .min(1, "description must be at least 1 character")
+    .max(400, "description cannot exceed 400 characters"),
+});
+
 module.exports = {
   formSchema,
   newPasswordSchema,
   formSignupSchema,
   forgotPasswordSchema,
   addMessageSchema,
+  createGroupSchema,
 };
