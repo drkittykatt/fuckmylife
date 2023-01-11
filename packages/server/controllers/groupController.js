@@ -1,23 +1,24 @@
 const pool = require("../db");
 
 module.exports.handleCreateGroup = async (req, res) => {
-  const newGroupQuery = await pool.query(
-    "INSERT INTO groups(name, description) values($1,$2) RETURNING id",
-    [req.body.groupname, req.body.description]
-  );
+  console.log(req.body);
+  // const newGroupQuery = await pool.query(
+  //   "INSERT INTO groups(name, description) values($1,$2) RETURNING id",
+  //   [req.body.groupname, req.body.description]
+  // );
 
-  const groupId = newGroupQuery.rows[0].id;
+  // const groupId = newGroupQuery.rows[0].id;
 
-  // when someone creates a group, they are added as the admin of the group & participating by default
-  const newParticipantQuery = await pool.query(
-    "INSERT INTO participants(user_id, group_id, is_admin) values ($1, $2, true) RETURNING id, user_id, group_id",
-    [req.body.userId, groupId]
-  );
+  // // when someone creates a group, they are added as the admin of the group & participating by default
+  // const newParticipantQuery = await pool.query(
+  //   "INSERT INTO participants(user_id, group_id, is_admin) values ($1, $2, true) RETURNING id, user_id, group_id",
+  //   [req.body.userId, groupId]
+  // );
 
-  res.json({
-    ...req.body,
-    status: "Group successfully created & you are the admin of this group",
-  });
+  // res.json({
+  //   ...req.body,
+  //   status: "Group successfully created & you are the admin of this group",
+  // });
 };
 
 module.exports.getAllGroups = async (req, res) => {
