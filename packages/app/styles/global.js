@@ -225,7 +225,7 @@ export const globalStyles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 14,
     paddingHorizontal: 20,
-    borderRadius: 6,
+    borderRadius: 12,
     elevation: 3,
     backgroundColor: "#1aa7ec",
   },
@@ -307,7 +307,7 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: "transparent",
     borderColor: "#228ee7",
     borderWidth: 5,
-    borderRadius: 15,
+    borderRadius: 12,
   },
   paragraph: {
     margin: 24,

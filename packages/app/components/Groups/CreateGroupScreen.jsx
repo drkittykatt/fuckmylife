@@ -39,7 +39,6 @@ export default function CreateGroupScreen({ navigation }) {
       </View>
 
       <View style={globalStyles.innerContainer}>
-        <Text>Welcome to the create group</Text>
         <Formik
           initialValues={{
             groupname: "",
@@ -83,73 +82,88 @@ export default function CreateGroupScreen({ navigation }) {
         >
           {(props) => (
             <View>
-              <Text>{error}</Text>
-              <Text>Group Name</Text>
-              <TextInput
-                style={globalStyles.input}
-                placeholder="Enter group name"
-                onChangeText={props.handleChange("groupname")}
-                value={props.values.groupname}
-                marginBottom={10}
-              />
-              {/* <Text>
+              <Text style={globalStyles.headerText}>Create group</Text>
+              <View style={{ marginVertical: 5 }}></View>
+              <View style={{ marginHorizontal: 30 }}>
+                <Text>{error}</Text>
+                <Text>Group Name</Text>
+                <TextInput
+                  style={globalStyles.input}
+                  placeholder="Enter group name"
+                  onChangeText={props.handleChange("groupname")}
+                  value={props.values.groupname}
+                  marginBottom={10}
+                />
+                {/* <Text>
               <ErrorMessage name="groupname" />
             </Text> */}
-              <Text>Description</Text>
-              <TextInput
-                // make the text box larger? Make sure it's maximum 255 characters.
-                style={globalStyles.input}
-                placeholder="Enter description"
-                onChangeText={props.handleChange("description")}
-                value={props.values.description}
-                marginBottom={10}
-              />
-              {/* <Text>
+                <Text>Description</Text>
+                <TextInput
+                  // make the text box larger? Make sure it's maximum 255 characters.
+                  style={globalStyles.inputLarge}
+                  multiline={true}
+                  placeholder="Enter description"
+                  onChangeText={props.handleChange("description")}
+                  value={props.values.description}
+                  marginBottom={10}
+                />
+                {/* <Text>
               <ErrorMessage name="description" />
             </Text> */}
-              <Text>Visibility</Text>
-
-              <View style={globalStyles.buttonContainer}>
-                <View>
-                  <TouchableOpacity
-                    //style={globalStyles.secondaryButton}
-                    style={
-                      privacySelection === "Private"
-                        ? globalStyles.selected
-                        : globalStyles.unselected
-                    }
-                    onPress={() => {
-                      //Alert.alert("you selected Private");
-                      setPrivacySelection("Private");
-                      //console.log(privacySelection);
-                    }}
-                  >
-                    <Text style={globalStyles.secondaryButtonText}>
-                      Private
-                    </Text>
-                  </TouchableOpacity>
+                <Text>Visibility</Text>
+                <View style={{ marginVertical: 5 }}></View>
+                <View style={globalStyles.buttonContainer}>
+                  <View>
+                    <TouchableOpacity
+                      //style={globalStyles.secondaryButton}
+                      style={
+                        privacySelection === "Private"
+                          ? globalStyles.selected
+                          : globalStyles.unselected
+                      }
+                      onPress={() => {
+                        //Alert.alert("you selected Private");
+                        setPrivacySelection("Private");
+                        //console.log(privacySelection);
+                      }}
+                    >
+                      <Text style={globalStyles.secondaryButtonText}>
+                        Private
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View>
+                    <TouchableOpacity
+                      //style={globalStyles.primaryButton}
+                      style={
+                        privacySelection === "Public"
+                          ? globalStyles.selected
+                          : globalStyles.unselected
+                      }
+                      //onPress={() => Alert.alert("you selected Public")}
+                      onPress={() => {
+                        // Alert.alert("you selected Public");
+                        setPrivacySelection("Public");
+                        //console.log(privacySelection);
+                      }}
+                    >
+                      <Text style={globalStyles.secondaryButtonText}>
+                        Public
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-                <View>
-                  <TouchableOpacity
-                    //style={globalStyles.primaryButton}
-                    style={
-                      privacySelection === "Public"
-                        ? globalStyles.selected
-                        : globalStyles.unselected
-                    }
-                    //onPress={() => Alert.alert("you selected Public")}
-                    onPress={() => {
-                      // Alert.alert("you selected Public");
-                      setPrivacySelection("Public");
-                      //console.log(privacySelection);
-                    }}
-                  >
-                    <Text style={globalStyles.secondaryButtonText}>Public</Text>
-                  </TouchableOpacity>
-                </View>
+                <View style={{ marginVertical: 10 }}></View>
+                <TouchableOpacity
+                  style={globalStyles.primaryButton}
+                  onPress={props.handleSubmit}
+                >
+                  <Text style={globalStyles.primaryButtonText}>
+                    Create Group
+                  </Text>
+                </TouchableOpacity>
+                {/* <Button title="Create Group" onPress={props.handleSubmit} /> */}
               </View>
-
-              <Button title="Create Group" onPress={props.handleSubmit} />
             </View>
           )}
         </Formik>
